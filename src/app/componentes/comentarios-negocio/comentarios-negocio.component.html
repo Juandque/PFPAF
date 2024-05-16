@@ -1,0 +1,49 @@
+<div class="d-flex flex-column flex-shrink-0" style="flex-grow: 1;">
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div *ngIf="estadoCamposCrearComentario==='ocultar'">
+                <button class="btn btn-custom" (click)="comentar()"><i class="fa-solid fa-pen-to-square"></i> Escribe un Comentario</button>
+            </div>
+            <div *ngIf="estadoCamposCrearComentario==='mostrar'">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="mt-3 mb-1">
+                            <input #calificacion="ngModel" class="form-control" 
+                            [ngClass]="calificacion.invalid && calificacion.dirty? 'is-invalid' : ''" type="number"
+                            name="calificacion" [(ngModel)]="crearComentarioDTO.calificacion" required/>
+                        </div>
+                        <div class="mb-3">
+                            <textarea #mensaje="ngModel" class="form-control"
+                            [ngClass]="mensaje.invalid && mensaje.dirty? 'is-invalid' : '' " type="text"
+                            name="mensaje" [(ngModel)]="crearComentarioDTO.mensaje" required ></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-custom mt-3" (click)="publicarComentario()">Publicar</button>
+                        <button class="btn btn-custom mt-3" (click)="cancelar()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            @for(item of comentarios; track $index){
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="{{item.fotoPerfilUsuario}}" class="rounded-3">
+                            </div>
+                            <div class="col-md-10">
+                                <h5 class="card-title">{{item.nombreUsuario}}</h5>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <p class="card-fecha">{{item.calificacion}} Estrellas    {{item.fecha}}</p>
+                            <p class="card-text">{{item.mensaje}}</p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            }
+        </div>
+    </div>
+</div>

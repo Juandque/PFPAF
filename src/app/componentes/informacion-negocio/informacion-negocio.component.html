@@ -1,0 +1,19 @@
+<div class="d-flex flex-column flex-shrink-0" style="flex-grow: 1;">
+    <div class="row ps-3">
+        <div class="col-md-12 mb-4">
+            <h5 class="card-title">Descripcion</h5>
+            <div class="col-sm-12">
+                <p class="card-text">{{negocio.descripcion}}</p>
+                <hr>
+                <p class="card-text"><i class="fa-solid fa-location-crosshairs"></i> {{negocio.direccion}} </p>
+                @for(item of negocio.telefonos; track $index){
+                <p class="card-text"><i class="fa-solid fa-phone"></i> {{item}}</p>
+                }
+
+                @for(item of negocio.horarios; track $index){
+                <p class="card-text"><i class="fa-solid fa-calendar-days"></i> {{item.dia}}: {{item.horaInicio}} - {{item.horaFin}}</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,107 @@
+<div class="container-fluid">
+    <div class="card-header ps-5 pt-4 pb-4 rounded">
+        <h4 class="mb-0" style="color: #355B3E;">Unilocal</h4>
+        <hr>
+        <h5 class="mb-0"><i style="color: #355B3E;">
+            </i>Hola, queremos saber primero un poco de ti. Llena los siguientes campos para crear tu cuenta</h5>
+    </div>
+    <div class="card-body">
+        <form #f="ngForm" (ngSubmit)="registrar()">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="col-sm-2 col-form-label" style="color: #355B3E;">Nombre: </label>
+                        <div class="col-sm-10">
+                            <input #nombre="ngModel" class="form-control"
+                                [ngClass]="nombre.invalid && nombre.dirty? 'is-invalid' : '' " type="text" name="nombre"
+                                [(ngModel)]="registroClienteDTO.nombre" required="true" maxlength="50" />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="col-sm-2 col-form-label" style="color: #355B3E;">Email: </label>
+                        <div class="col-sm-10">
+                            <input #email="ngModel" class="form-control"
+                                [ngClass]="email.invalid && email.dirty? 'is-invalid' : '' " type="email" name="email"
+                                [(ngModel)]="registroClienteDTO.email" required="true" email="true" />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="col-sm-3 col-form-label" style="color: #355B3E;">Username: </label>
+                        <div class="col-sm-10">
+                            <input #username="ngModel" class="form-control"
+                                [ngClass]="username.invalid && username.dirty? 'is-invalid' : '' " type="text"
+                                name="nombreUsuario" [(ngModel)]="registroClienteDTO.nombreUsuario" required="true"
+                                maxlength="15" />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="col-sm-2 col-form-label" style="color: #355B3E;">Foto: </label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="file" name="fotoPerfil" (change)="onFileChange($event)"
+                                required="true" />
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <button class="btn btn-custom" type="button" (click)="limpiar()">
+                            <i class="fa-solid me-1" style="color: #D3D3D3;"></i>Limpiar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="col-sm-2 col-form-label" style="color: #355B3E;">Apellido: </label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" name="apellido" [(ngModel)]="apellido"
+                                required="true" maxlength="50" />
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label" style="color: #355B3E;">Ciudad: </label>
+                        <div class="col-sm-10">
+                            <select class="form-select" name="ciudadResidencia"
+                                [(ngModel)]="registroClienteDTO.ciudadResidencia" required="true">
+                                <option value="" selected>Seleccione una ciudad</option>
+                                @for (item of ciudades; track $index) {<option [value]="item">{{item}}</option>}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="col-sm-3 col-form-label" style="color: #355B3E;">Contraseña: </label>
+                        <div class="col-sm-10">
+                            <input #password="ngModel" class="form-control"
+                                [ngClass]="password.invalid && password.dirty? 'is-invalid' : '' " type="password"
+                                name="password" [(ngModel)]="registroClienteDTO.password" required="true"
+                                minlength="8" />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="col-sm-5 col-form-label" style="color: #355B3E;">Repetir contraseña: </label>
+                        <div class="col-sm-10">
+                            <input #confirmaPassword="ngModel" class="form-control"
+                                [ngClass]="confirmaPassword.invalid && confirmaPassword.dirty? 'is-invalid' : '' "
+                                type="password" name="confirmaPassword"
+                                [(ngModel)]="registroClienteDTO.confirmaPassword" required />
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        @if (!sonIguales()) { <p>Las contraseñas no coinciden</p> }
+
+                        <button class="btn btn-custom" type="submit" [disabled]="f.invalid || !sonIguales()">
+                            <i class="fa-solid me-1" style="color: #D3D3D3;"></i>Registrarse
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

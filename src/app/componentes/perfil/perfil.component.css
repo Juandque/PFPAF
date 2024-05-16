@@ -1,0 +1,27 @@
+.divider {
+    background-color: #127207;
+    height: 24px;
+    margin: 20px 0;
+    border: none;
+}
+img {
+    width: 400px;
+    height: 350px;
+}
+.btn-custom {
+    background-color: #d3d3d3;
+    /* Orange color */
+    border-radius: 20px;
+    border-color: #d3d3d3;
+    color: black;
+    /* White text */
+}
+.card-title {
+    font-size: 32px;
+    font-weight: bolder;
+    font-family: Roboto, sans-serif;
+    color: #127207;
+}
+.relleno{
+    height: 100px;
+}

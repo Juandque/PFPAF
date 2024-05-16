@@ -1,0 +1,64 @@
+<main class="d-flex flex-nowrap">
+    <app-sidebar></app-sidebar>
+    <div class="d-flex flex-column flex-shrink-0" style="flex-grow: 1;">
+        <div class="row ps-3">
+            <div class="col-md-3 mb-4 scrollable-container rounded-1">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{negocio.nombre}}</h5>
+                        <div class="col-sm-12">
+                            <p class="card-text">{{negocio.calificacionPromedio}} Estrellas ({{negocio.numeroCalificaciones}})</p>
+                            <p class="card-text">{{negocio.tipoNegocio}}</p>
+                            <p class="card-text">{{negocio.estadoActual}} Cierra a las {{negocio.horaCierre}}</p>
+                        </div>
+                        <div class="row mt-5 mb-5 text-center">
+                            <div class="col">
+                                <i class="fa-solid fa-bookmark fa-2x"></i>
+                            </div>
+                            <div class="col">
+                                <i class="fa-solid fa-share-nodes fa-2x"></i>
+                            </div>
+                            <div class="col">
+                                <i class="fa-solid fa-route fa-2x"></i>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div id="carouselExampleRide-{{negocio.codigo}}" class="carousel slide" data-bs-ride="true">
+                                <div class="carousel-inner">
+                                    @for (imagen of negocio.imagenes; track $index){
+                                    <div class="carousel-item" [ngClass]="$index==0 ? 'active': ''" >
+                                        <img src={{imagen}} class="d-block w-100" alt="">
+                                    </div>
+                                    }
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                  </button>
+                                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                  </button>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col">
+                                <button class="btn btn-custom btn-block" style="flex-grow: 1;" (click)="mostrarDescripcion()">Descripcion</button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-custom btn block" style="flex-grow: 1;" (click)="mostrarComentarios()">Comentarios</button>
+                            </div>
+                        </div>
+                        <hr>
+                        <div *ngIf="mostrarComponente==='descripcion'">
+                            <app-informacion-negocio></app-informacion-negocio>
+                        </div>
+                        <div *ngIf="mostrarComponente==='comentarios'">
+                            <app-comentarios-negocio></app-comentarios-negocio>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,42 @@
+.bi {
+    vertical-align: -.125em;
+    fill: currentColor;
+}
+.perfil{
+    flex: 1;
+}
+.fa-user{
+    color: black;
+}
+.fa-shop{
+    color: black;
+}
+.fa-map-location-dot{
+    color: black;
+}
+.fa-bookmark{
+    color: black;
+}
+.fa-compass{
+    color: black;
+}
+.fa-arrow-right-from-bracket{
+    color: red;
+}
+.menu{
+    font-size: 16.7px;
+    font-family:  'Inter', sans-serif;
+    font-weight: lighter;
+    color: #757575;
+}
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    /* Asigna una altura al contenedor */
+}
+
+log-out {
+    flex: 1;
+    /* Ocupa el espacio restante */
+}

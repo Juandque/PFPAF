@@ -1,0 +1,61 @@
+<main class="d-flex flex-nowrap">
+    <app-sidebar></app-sidebar>
+    <div class="d-flex flex-column flex-shrink-0" style="flex-grow: 1;">
+        <div class="card-header ps-5 pt-4 pb-1 text-center card-title">
+            <h5 class="mb-0">Tu Perfil</h5>
+        </div>
+        <div class="divider"></div>
+        <div class="relleno"></div>
+        <div class="container">
+            <form #f="ngForm">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-5">
+                            <label class="col-sm-2 col-form-label" style="color: #355B3E;">Nombre:</label>
+                            <div class="col-sm-10">
+                                <input #nombre="ngModel" class="form-control" 
+                                [ngClass]="nombre.invalid && nombre.dirty? 'is-invalid' : '' " type="text" name="nombre"
+                                [(ngModel)]="mostrarPerfilDTO.nombre" required="true" maxlength="50"/>
+                            </div>
+                        </div>
+                        <div class="mb-5">
+                            <label class="col-sm-2 col-form-label" style="color: #355B3E;">Ciudad:</label>
+                            <div class="col-sm-10">
+                                <select class="form-select" name="ciudad" [(ngModel)]="mostrarPerfilDTO.ciudad" required="true">
+                                    @for(item of ciudades; track $index){<option [value]="item">{{item}}</option>}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-5">
+                            <label class="col-sm-2 col-form-label" style="color: #355B3E;">Email:</label>
+                            <div class="col-sm-10">
+                                <input #email="ngModel" class="form-control"
+                                [ngClass]="email.invalid && email.dirty? 'is-invalid' : '' " type="email" name="email"
+                                [(ngModel)]="mostrarPerfilDTO.email" required="true" email="true"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="mb-2">
+                            <label class="col-sm-2 col-form-label" style="color: #355B3E;">Foto de Perfil</label>
+                            <img src="{{mostrarPerfilDTO.fotoPerfil}}" class="rounded d-block">
+                            <div class="col-sm-10 mt-5">
+                                <input class="form-control" type="file" name="fotoPerfil" (change)="onFileChange($event)"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="relleno"></div>
+        <div class="divider"></div>
+        <div class="row">
+            <div class="col text-center">
+                <button class="btn btn-custom" (click)="actualizar()" [disabled]="f.invalid">Actualizar</button>
+            </div>
+            <div class="col text-center">
+                <button class="btn btn-custom" (click)="eliminar()">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,40 @@
+.card {
+    background-color: #fff;
+    border-radius: 0px;
+    border-color: #fff;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+.card-title {
+    font-size: 19px;
+    font-weight: bold;
+    font-family: Roboto, sans-serif;
+}
+
+.card-text {
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: Roboto, sans-serif;
+}
+
+.card-type {
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: Roboto, sans-serif;
+    color: #8A908D;
+}
+.btn-custom {
+    background-color: #fff;
+    /* Orange color */
+    border-radius: 2px;
+    border-color: #fff;
+    color: #857D7D;
+    /* White text */
+}
+.scrollable-container {
+    max-height: 920px; /* ajusta según sea necesario */
+    overflow-y: auto; /* habilita el scroll vertical cuando sea necesario */
+}
