@@ -43,4 +43,13 @@ export class TokenService {
     const values = JSON.parse(payloadDecoded);
     return values;
   }
+
+  public getCodigo(): string{
+    const token = this.getToken();
+    if(token){
+      const values = this.decodePayload(token);
+      return values.id;
+    }
+    return "";
+  }
 }

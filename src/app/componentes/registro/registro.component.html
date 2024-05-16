@@ -44,6 +44,9 @@
                             <input class="form-control" type="file" name="fotoPerfil" (change)="onFileChange($event)"
                                 required="true" />
                         </div>
+                        <div class="col-sm-2">
+                            <button type="submit" [disabled]="archivos==null" class="btn btn-custom" (click)="subirImagen()">Subir Foto</button>
+                        </div>
                     </div>
 
                     <div class="mb-5">
@@ -96,12 +99,13 @@
                     <div class="mb-5">
                         @if (!sonIguales()) { <p>Las contraseñas no coinciden</p> }
 
-                        <button class="btn btn-custom" type="submit" [disabled]="f.invalid || !sonIguales()">
+                        <button class="btn btn-custom" type="submit" [disabled]="f.invalid || !sonIguales()" (click)="registrar()">
                             <i class="fa-solid me-1" style="color: #D3D3D3;"></i>Registrarse
                         </button>
                     </div>
                 </div>
             </div>
+            <app-alerta [alerta]="alerta"></app-alerta>
         </form>
     </div>
 </div>
