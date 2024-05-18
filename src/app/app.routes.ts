@@ -18,11 +18,11 @@ export const routes: Routes = [
 { path: "gestion-negocios", component: GestionNegociosComponent },
 { path: "explorar-negocios", component: ExplorarNegociosComponent},
 { path: "favoritos", component: FavoritosComponent},
-{ path: "detalle-negocio", component: DetalleNegocioComponent},
+{ path: "detalle-negocio/:codigo", component: DetalleNegocioComponent},
 { path: "crear-negocio", component: CrearNegocioComponent },
-{ path: "comentarios-negocio", component: ComentariosNegocioComponent},
-{ path: "informacion-negocio", component: InformacionNegocioComponent},
+{ path: "comentarios-negocio/:codigo", component: ComentariosNegocioComponent},
+{ path: "informacion-negocio/:codigo", component: InformacionNegocioComponent},
 { path: "detalle-negocio-propietario/:codigo", component: DetalleNegocioPropietarioComponent },
-{ path: "perfil", component: PerfilComponent},
+{ path: "perfil/:codigo", component: PerfilComponent},
 { path: "**", pathMatch: "full", redirectTo: "" }
 ];

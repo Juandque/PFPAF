@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { DetalleNegocioDTO } from '../../dto/detalle-negocio-dto';
 import { NegociosService } from '../../servicios/negocios.service';
@@ -17,13 +17,12 @@ import { ComentariosNegocioComponent } from '../comentarios-negocio/comentarios-
 export class DetalleNegocioComponent {
   negocio: DetalleNegocioDTO;
   mostrarComponente: string='descripcion';
-  constructor(private negociosService: NegociosService){
+  constructor(private route: ActivatedRoute,private negociosService: NegociosService){
     this.negocio=new DetalleNegocioDTO();
     this.listar();
   }
 
   public listar(){
-    this.negocio= this.negociosService.listarDetalle();
   }
 
   mostrarDescripcion(){

@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ItemComentarioDTO } from '../../dto/item-comentario-dto';
 import { ComentariosService } from '../../servicios/comentarios.service';
 import { CrearComentarioDTO } from '../../dto/crear-comentario-dto';
+import { PublicoService } from '../../servicios/publico.service';
+import { TokenService } from '../../servicios/token.service';
+import { Alerta } from '../../dto/alerta';
 
 @Component({
   selector: 'app-comentarios-negocio',
@@ -17,14 +20,24 @@ export class ComentariosNegocioComponent {
   comentarios: ItemComentarioDTO[];
   crearComentarioDTO: CrearComentarioDTO;
   estadoCamposCrearComentario: string='ocultar';
-  constructor(private comentariosService: ComentariosService){
+  codigoNegocio!: string ;
+  alerta!: Alerta;
+  constructor(private route: ActivatedRoute, private publicosService: PublicoService, private comentariosService: ComentariosService, private tokenService: TokenService){
     this.crearComentarioDTO= new CrearComentarioDTO();
     this.comentarios=[];
     this.listar();
   }
 
   public listar(){
-    this.comentarios=this.comentariosService.listar();
+    this.codigoNegocio= this.route.snapshot.paramMap.get('codigo') as string;
+    this.publicosService.listarComentariosNegocios(this.codigoNegocio).subscribe({
+      next: (data) =>{
+        this.comentarios= data.respuesta;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    })
   }
 
   comentar(){
@@ -36,8 +49,24 @@ export class ComentariosNegocioComponent {
   }
 
   public publicarComentario(){
-    this.crearComentarioDTO.codigoUsuario='2121';
-    this.crearComentarioDTO.codigoNegocio='31321';
-    console.log(this.crearComentarioDTO);
+    this.crearComentarioDTO.codigoUsuario=this.tokenService.getCodigo();
+    this.crearComentarioDTO.codigoNegocio=this.route.snapshot.paramMap.get('codigo') as string;
+    this.comentariosService.crearComentario(this.crearComentarioDTO)
+    if(this.crearComentarioDTO.codigoNegocio!=null && this.crearComentarioDTO.codigoUsuario!=null){
+      if(this.crearComentarioDTO.mensaje!=null){
+        this.comentariosService.crearComentario(this.crearComentarioDTO).subscribe({
+          next: (data) => {
+            this.alerta= new Alerta(data.respuesta, "success");
+          },
+          error: (error) => {
+            this.alerta= new Alerta(error.error.respuesta, "danger");
+          }
+        })
+      }else{
+        this.alerta= new Alerta("Debe escribir un comentario para poder punlicar", "danger");
+      }
+    }else{
+      this.alerta= new Alerta("Ocurrio un error al publicar su comentario, Intente de nuevo", "danger");
+    }
   }
 }

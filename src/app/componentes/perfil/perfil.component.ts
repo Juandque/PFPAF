@@ -5,6 +5,10 @@ import { ClienteService } from '../../servicios/cliente.service';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ImagenService } from '../../servicios/imagen.service';
+import { Alerta } from '../../dto/alerta';
+import { TokenService } from '../../servicios/token.service';
 
 @Component({
   selector: 'app-perfil',
@@ -18,7 +22,9 @@ export class PerfilComponent {
   mostrarPerfilDTO: MostrarPerfilDTO;
   ciudades: string[];
   archivos!:FileList;
-  constructor(private clienteService: ClienteService){
+  alerta!: Alerta;
+  codigoCliente!: string;
+  constructor(private route: ActivatedRoute,private clienteService: ClienteService, private imagenService: ImagenService, private router: Router, private tokenService: TokenService){
     this.ciudades=[];
     this.cargarCiudades();
     this.actualizarClienteDto= new ActualizarClienteDto();
@@ -30,15 +36,38 @@ export class PerfilComponent {
     this.actualizarClienteDto={
       id: this.mostrarPerfilDTO.id,
       nombre: this.mostrarPerfilDTO.nombre,
-      fotoPerfil: this.mostrarPerfilDTO.fotoPerfil,
+      fotoPerfil: this.actualizarClienteDto.fotoPerfil,
       email: this.mostrarPerfilDTO.email,
       ciudadResidencia: this.mostrarPerfilDTO.ciudad
     }
-    console.log(this.actualizarClienteDto)
+    if(this.actualizarClienteDto.fotoPerfil!=null && this.actualizarClienteDto.fotoPerfil!=""){
+      if(this.actualizarClienteDto.fotoPerfil != this.mostrarPerfilDTO.fotoPerfil){
+        console.log("son diferentes");
+      }else{
+        this.clienteService.actualizarCliente(this.actualizarClienteDto).subscribe({
+          next: data => {
+            this.alerta= new Alerta(data.respuesta, "success");
+          },
+          error: error => {
+            this.alerta = new Alerta(error.error.respuesta, "danger");
+          }
+        });
+      }
+    }else{
+      this.alerta= new Alerta("Debe tener una foto de perfil, suba una imagen", "warning");
+    }
   }
 
-  public eliminar(){
-    console.log("Eliminar Cliente");
+  public eliminar() {
+    this.codigoCliente = this.route.snapshot.paramMap.get('codigo') as string;
+    this.clienteService.eliminarCuenta(this.codigoCliente).subscribe({
+      next: (data) => {
+        this.tokenService.logOut();
+      },
+      error: (error) => {
+        this.alerta= new Alerta("Ha ocurrido un error al intentar eliminar tu cuenta", "danger");
+      }
+    });
   }
 
   private cargarCiudades() {
@@ -63,6 +92,32 @@ export class PerfilComponent {
   }
 
   public getCliente(){
-    this.mostrarPerfilDTO=this.clienteService.getCliente();
+    this.codigoCliente= this.route.snapshot.paramMap.get('codigo') as string;
+    this.clienteService.obtenerCliente(this.codigoCliente).subscribe({
+      next: (data) => {
+        this.mostrarPerfilDTO=data.respuesta;
+      },
+      error: (error) => {
+        this.alerta= new Alerta("Ocurrio un error al cargar tu perfil", "danger");
+      }
+    });
+  }
+
+  public subirImagen(){
+    if(this.archivos!=null && this.archivos.length>0){
+      const formData= new FormData();
+      formData.append('file',this.archivos[0]);
+      this.imagenService.subir(formData).subscribe({
+        next: data => {
+          this.actualizarClienteDto.fotoPerfil=data.respuesta.url;
+          this.alerta= new Alerta("Se ha subido la foto", "success");
+        },
+        error: error => {
+          this.alerta= new Alerta(error.error, "danger");
+        }
+      });
+    }else{
+      this.alerta= new Alerta("Debe subir una foto", "danger");
+    }
   }
 }

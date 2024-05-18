@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { Horario } from '../../models/horario';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { MapaService } from '../../servicios/mapa.service';
+import { TokenService } from '../../servicios/token.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class CrearNegocioComponent {
   tiposNegocio: string[];
 
 
-  constructor(private negocioService: NegociosService, private mapaService: MapaService) {
+  constructor(private negocioService: NegociosService, private mapaService: MapaService, private tokenService: TokenService) {
     this.crearNegocioDTO = new CrearNegocioDTO();
     this.horarios = [new Horario()];
     this.telefonos = [""]
@@ -34,6 +35,7 @@ export class CrearNegocioComponent {
   public crearNegocio() {
     this.crearNegocioDTO.horarios = this.horarios;
     this.crearNegocioDTO.telefonos= this.telefonos;
+    this.crearNegocioDTO.codigoUsuario=this.tokenService.getCodigo();
     this.negocioService.crear(this.crearNegocioDTO);
     console.log(this.crearNegocioDTO);
   }

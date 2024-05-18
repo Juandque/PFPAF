@@ -21,9 +21,6 @@ export class DetalleNegocioPropietarioComponent {
     });
   }
   public obtenerNegocio() {
-    const negocioConsultado = this.negociosService.obtener(this.codigoNegocio);
-    if (negocioConsultado != undefined) {
-      this.negocio = negocioConsultado;
-    }
+    
   }
 }

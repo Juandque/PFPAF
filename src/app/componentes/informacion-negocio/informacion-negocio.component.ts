@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ItemNegocioInfoDTO } from '../../dto/item-negocio-info-dto';
 import { NegociosService } from '../../servicios/negocios.service';
 
@@ -13,12 +13,11 @@ import { NegociosService } from '../../servicios/negocios.service';
 })
 export class InformacionNegocioComponent {
   negocio: ItemNegocioInfoDTO;
-  constructor(private negociosService: NegociosService){
+  constructor(private route: ActivatedRoute, private negociosService: NegociosService){
     this.negocio= new ItemNegocioInfoDTO();
     this.listar();
   }
 
   public listar(){
-    this.negocio= this.negociosService.listarInfo();
   }
 }

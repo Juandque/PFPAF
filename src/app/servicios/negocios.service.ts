@@ -15,30 +15,30 @@ import { ActualizarNegocioDTO } from '../dto/actualizar-negocio-dto';
   providedIn: 'root'
 })
 export class NegociosService {
-private negociosURL = "http://localhost:8081/api/negocios";
-  constructor(private http: HttpClient) {}
+  private negociosURL = "http://localhost:8082/api/negocios";
+  constructor(private http: HttpClient) { }
 
-  public crear(negocioNuevo: CrearNegocioDTO): Observable<MensajeDTO>{
+  public crear(negocioNuevo: CrearNegocioDTO): Observable<MensajeDTO> {
     return this.http.post<MensajeDTO>(`${this.negociosURL}/crear-negocio`, negocioNuevo);
   }
 
-  public actualizarNegocio(negocioActualizado: ActualizarNegocioDTO):Observable<MensajeDTO>{
+  public actualizarNegocio(negocioActualizado: ActualizarNegocioDTO): Observable<MensajeDTO> {
     return this.http.put<MensajeDTO>(`${this.negociosURL}/actualizar-negocio`, negocioActualizado);
   }
 
-  public eliminarNegocio(codigoNegocio: string):Observable<MensajeDTO>{
+  public eliminarNegocio(codigoNegocio: string): Observable<MensajeDTO> {
     return this.http.delete<MensajeDTO>(`${this.negociosURL}/eliminar-negocio/${codigoNegocio}`);
   }
 
-  public obtenerDetalleNegocioPropio(codigoNegocio: string): Observable<MensajeDTO>{
+  public obtenerDetalleNegocioPropio(codigoNegocio: string): Observable<MensajeDTO> {
     return this.http.get<MensajeDTO>(`${this.negociosURL}/obtener-detalle-negocio-propio/${codigoNegocio}`);
   }
 
-  public listarNegociosPropietario(codigoUsuario: string): Observable<MensajeDTO>{
+  public listarNegociosPropietario(codigoUsuario: string): Observable<MensajeDTO> {
     return this.http.get<MensajeDTO>(`${this.negociosURL}/listar-negocios-propietario/${codigoUsuario}`);
   }
 
-  public listarNegociosFavoritos(codigoUsuario:string): Observable<MensajeDTO>{
+  public listarNegociosFavoritos(codigoUsuario: string): Observable<MensajeDTO> {
     return this.http.get<MensajeDTO>(`${this.negociosURL}/listar-negocios-favoritos/${codigoUsuario}`);
   }
 
