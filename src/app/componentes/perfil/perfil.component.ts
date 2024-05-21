@@ -9,11 +9,12 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ImagenService } from '../../servicios/imagen.service';
 import { Alerta } from '../../dto/alerta';
 import { TokenService } from '../../servicios/token.service';
+import { AlertaComponent } from '../alerta/alerta.component';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [FormsModule, CommonModule, SidebarComponent],
+  imports: [FormsModule, CommonModule, SidebarComponent, AlertaComponent],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css'
 })
@@ -36,7 +37,7 @@ export class PerfilComponent {
     this.actualizarClienteDto={
       id: this.mostrarPerfilDTO.id,
       nombre: this.mostrarPerfilDTO.nombre,
-      fotoPerfil: this.actualizarClienteDto.fotoPerfil,
+      fotoPerfil: this.mostrarPerfilDTO.fotoPerfil,
       email: this.mostrarPerfilDTO.email,
       ciudadResidencia: this.mostrarPerfilDTO.ciudad
     }
@@ -98,6 +99,7 @@ export class PerfilComponent {
         this.mostrarPerfilDTO=data.respuesta;
       },
       error: (error) => {
+        console.log("Error al cargar perfil");
         this.alerta= new Alerta("Ocurrio un error al cargar tu perfil", "danger");
       }
     });
@@ -109,7 +111,7 @@ export class PerfilComponent {
       formData.append('file',this.archivos[0]);
       this.imagenService.subir(formData).subscribe({
         next: data => {
-          this.actualizarClienteDto.fotoPerfil=data.respuesta.url;
+          this.mostrarPerfilDTO.fotoPerfil=data.respuesta.url;
           this.alerta= new Alerta("Se ha subido la foto", "success");
         },
         error: error => {

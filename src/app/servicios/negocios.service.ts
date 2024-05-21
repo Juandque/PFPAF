@@ -15,7 +15,7 @@ import { ActualizarNegocioDTO } from '../dto/actualizar-negocio-dto';
   providedIn: 'root'
 })
 export class NegociosService {
-  private negociosURL = "http://localhost:8082/api/negocios";
+  private negociosURL = "http://localhost:8282/api/negocios";
   constructor(private http: HttpClient) { }
 
   public crear(negocioNuevo: CrearNegocioDTO): Observable<MensajeDTO> {
@@ -40,6 +40,10 @@ export class NegociosService {
 
   public listarNegociosFavoritos(codigoUsuario: string): Observable<MensajeDTO> {
     return this.http.get<MensajeDTO>(`${this.negociosURL}/listar-negocios-favoritos/${codigoUsuario}`);
+  }
+
+  public obtenerNegocio(codigoNegocio: string): Observable<MensajeDTO>{
+    return this.http.get<MensajeDTO>(`${this.negociosURL}/obetener-negocio/${codigoNegocio}`);
   }
 
 }

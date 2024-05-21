@@ -11,15 +11,18 @@ import { ExplorarNegociosComponent } from './componentes/explorar-negocios/explo
 import { DetalleNegocioComponent } from './componentes/detalle-negocio/detalle-negocio.component';
 import { ComentariosNegocioComponent } from './componentes/comentarios-negocio/comentarios-negocio.component';
 import { InformacionNegocioComponent } from './componentes/informacion-negocio/informacion-negocio.component';
+import { LoginGuard } from './servicios/permiso.service';
+import { ActualizarNegocioPropioComponent } from './componentes/actualizar-negocio-propio/actualizar-negocio-propio.component';
 export const routes: Routes = [
 { path: '', component: InicioComponent },
-{ path: 'login', component: LoginComponent },
-{ path: 'registro', component: RegistroComponent },
+{ path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
+{ path: 'registro', component: RegistroComponent, canActivate: [LoginGuard] },
 { path: "gestion-negocios", component: GestionNegociosComponent },
 { path: "explorar-negocios", component: ExplorarNegociosComponent},
 { path: "favoritos", component: FavoritosComponent},
 { path: "detalle-negocio/:codigo", component: DetalleNegocioComponent},
 { path: "crear-negocio", component: CrearNegocioComponent },
+{ path: "actualizar-negocio-propio/:codigo", component: ActualizarNegocioPropioComponent},
 { path: "comentarios-negocio/:codigo", component: ComentariosNegocioComponent},
 { path: "informacion-negocio/:codigo", component: InformacionNegocioComponent},
 { path: "detalle-negocio-propietario/:codigo", component: DetalleNegocioPropietarioComponent },

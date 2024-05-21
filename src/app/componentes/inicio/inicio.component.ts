@@ -13,18 +13,11 @@ import { NegociosService } from '../../servicios/negocios.service';
   styleUrl: './inicio.component.css'
 })
 export class InicioComponent {
-  negocios: ItemMarcadorNegocioDTO[];
   constructor(private mapaService: MapaService, private negociosService: NegociosService){
-    this.negocios=[];
-    this.listar();
   }
 
-  public listar(){
-    this.negocios= this.negociosService.listarMarcadores();
-  }
 
   ngOnInit():void{
     this.mapaService.crearMapa();
-    this.mapaService.pintarMarcadores(this.negocios);
   }
 }

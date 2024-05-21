@@ -8,7 +8,7 @@ import { ObtenerDistanciaDTO } from '../dto/obtener-distancia-dto';
   providedIn: 'root'
 })
 export class PublicoService {
-  private publicoURL="http://localhost:8082/api/publico";
+  private publicoURL="http://localhost:8282/api/publico";
   constructor(private http: HttpClient) { }
 
   public listarComentariosNegocios(codigoNegocio: string):Observable<MensajeDTO>{

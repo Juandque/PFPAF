@@ -10,7 +10,7 @@ import { ResponderComentarioDTO } from '../dto/responder-comentario-dto';
   providedIn: 'root'
 })
 export class ComentariosService {
-  private comentariosURL = "http://localhost:8082/api/comentarios"
+  private comentariosURL = "http://localhost:8282/api/comentarios"
   constructor(private http: HttpClient) { }
 
   public crearComentario(comentario: CrearComentarioDTO):Observable<MensajeDTO> {

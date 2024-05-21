@@ -29,12 +29,12 @@ export class TokenService {
 
   public logIn(token: string){
     this.setToken(token);
-    this.router.navigate(["/inicio"])
+    this.router.navigate(["/inicio"]).then(() => {window.location.reload();});
   }
 
   public logOut(){
     window.sessionStorage.clear();
-    this.router.navigate(["/inicio"]);
+    this.router.navigate(["/inicio"]).then(() => {window.location.reload();});
   }
 
   private decodePayload(token:string){
@@ -45,6 +45,24 @@ export class TokenService {
   }
 
   public getCodigo(): string{
+    const token = this.getToken();
+    if(token){
+      const values = this.decodePayload(token);
+      return values.id;
+    }
+    return "";
+  }
+
+  public getEmail():string{
+    const token=this.getToken();
+    if(token){
+      const values = this.decodePayload(token);
+      return values.sub;
+    }
+    return "";
+  }
+
+  public getId(): string{
     const token = this.getToken();
     if(token){
       const values = this.decodePayload(token);

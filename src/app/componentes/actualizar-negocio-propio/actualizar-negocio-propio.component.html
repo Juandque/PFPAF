@@ -2,7 +2,7 @@
     <app-sidebar></app-sidebar>
     <div class="d-flex flex-column flex-shrink-0" style="flex-grow: 1;">
         <div class="card-header ps-5 pt-4 pb-4 text-center card-title">
-            <h5 class="mb-0">Crea tu Negocio</h5>
+            <h5 class="mb-0">Actualiza tu Negocio</h5>
         </div>
         <div class="divider"></div>
         <div class="container">
@@ -14,7 +14,7 @@
                             <div class="col-sm-10">
                                 <input #nombre="ngModel" class="form-control"
                                     [ngClass]="nombre.invalid && nombre.dirty? 'is-invalid' : '' " type="text"
-                                    name="nombre" [(ngModel)]="crearNegocioDTO.nombre" required="true" maxlength="50" />
+                                    name="nombre" [(ngModel)]="obtenerNegocioDTO.nombre" required="true" maxlength="50" />
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -50,24 +50,14 @@
                             <div class="col-sm-10">
                                 <textarea #descripcion="ngModel" class="form-control"
                                     [ngClass]="descripcion.invalid && descripcion.dirty? 'is-invalid' : '' " type="text"
-                                    name="descripcion" [(ngModel)]="crearNegocioDTO.descripcion" required="true">
+                                    name="descripcion" [(ngModel)]="obtenerNegocioDTO.descripcion" required="true">
                                 </textarea>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="col-sm-2 col-form-label" style="color: #355B3E;">Imagenes: </label>
-                            <div class="col-sm-10">
-                                <input class="form-control" type="file" name="imagenes" (change)="onFileChange($event)"
-                                    multiple required />
-                            </div>
-                            <div class="col-sm-2">
-                                <button type="submit" [disabled]="archivos==null" class="btn btn-custom" (click)="subirImagen()">Subir Fotos</button>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="col-sm-auto col-form-label" style="color: #355B3E;">Tipo de Negocio</label>
                             <div class="col-sm-10">
-                                <select class="form-select" name="tipoNegocio" [(ngModel)]="crearNegocioDTO.tipoNegocio"
+                                <select class="form-select" name="tipoNegocio" [(ngModel)]="obtenerNegocioDTO.tipoNegocio"
                                     required="true">
                                     <option value="" selected>Seleccione una opcion</option>
                                     @for (item of tiposNegocio; track $index){<option [value]="item">{{item}}</option>}
@@ -86,7 +76,7 @@
                             <label class="col-sm-2 col-form-label" style="color: #355B3E;">Direccion: </label>
                             <div class="row">
                                 <input #direccion="ngModel" class="form-control" type="text" name="direccion"
-                                    [(ngModel)]="crearNegocioDTO.direccion" required="true" maxlength="50" />
+                                    [(ngModel)]="obtenerNegocioDTO.direccion" required="true" maxlength="50" />
                             </div>
                         </div>
                         <div class="mb-3">
@@ -104,6 +94,28 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="mb-3">
+                            <label class="col-sm-2 col-form-label" style="color: #355B3E;">Imagenes: </label>
+                            <div>
+                                <h3>Imagenes del Negocio</h3>
+                                @for(item of imagenesExistentes; track $index){
+                                    <div>
+                                        <img src="{{item}}" alt="Imagen existente" width="100">
+                                        <button (click)="marcarParaEliminar($index)">
+                                            {{item.seleccionada ? 'Desmarcar' : 'Marcar para Eliminar'}}
+                                        </button>
+                                    </div>
+                                }
+                                <button type="submit" class="btn btn-custom" (click)="eliminarImagenes()">Eliminar Imagenes Seleccionadas</button>
+                            </div>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="file" name="imagenes" (change)="onFileChange($event)"
+                                    multiple required />
+                            </div>
+                            <div class="col-sm-2">
+                                <button type="submit" [disabled]="archivos==null" class="btn btn-custom" (click)="subirImagen()">Subir Fotos</button>
+                            </div>
+                        </div>
                     </div>
                     <app-alerta [alerta]="alerta"></app-alerta>
                 </div>
@@ -113,8 +125,8 @@
         <div class="row">
             <div class="col">
                 <div class="text-center">
-                    <button class="btn btn-custom" (click)="crearNegocio()">
-                        Crear Negocio
+                    <button class="btn btn-custom" (click)="actualizarNegocio()">
+                        Actualizar Negocio
                     </button>
                 </div>
             </div>

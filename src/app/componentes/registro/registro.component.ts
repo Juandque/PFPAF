@@ -56,7 +56,6 @@ export class RegistroComponent {
   public onFileChange(event: any) {
     if (event.target.files.length > 0) {
       this.archivos = event.target.files;
-      this.registroClienteDTO.fotoPerfil = this.archivos[0].name;
     }
   }
 

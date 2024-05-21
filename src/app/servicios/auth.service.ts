@@ -10,7 +10,7 @@ import { SesionDTO } from '../dto/sesion-dto';
   providedIn: 'root'
 })
 export class AuthService {
-  private authURL = "http://localhost:8081/api/auth";
+  private authURL = "http://localhost:8282/api/auth";
   constructor(private http: HttpClient) { }
 
   public registrarCliente(cliente: RegistroClienteDTO): Observable<MensajeDTO>{
