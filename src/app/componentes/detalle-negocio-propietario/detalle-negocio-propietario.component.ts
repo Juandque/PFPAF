@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { DetalleNegocioPropioDTO } from '../../dto/detalle-negocio-propio-dto';
 import { Alerta } from '../../dto/alerta';
 import { AlertaComponent } from '../alerta/alerta.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-detalle-negocio-propietario',
   standalone: true,
-  imports: [CommonModule, AlertaComponent],
+  imports: [CommonModule, AlertaComponent, SidebarComponent],
   templateUrl: './detalle-negocio-propietario.component.html',
   styleUrl: './detalle-negocio-propietario.component.css'
 })

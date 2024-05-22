@@ -1,14 +1,47 @@
-<p>login works!</p>
-<form #f="ngForm" (ngSubmit)="iniciarSesion()">
-    <div>
-        <label>Email: </label>
-        <input type="email" name="email" [(ngModel)]="sesionDTO.email" required email />
-    </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-title">
+                    <h2 class="mb-3" style="color: #355B3E;">Unilocal</h2>
+                    <h5 class="mb-0" style="color: #355B3E;">Navega hacia tu proximo destino con facilidad</h5>
+                </div>
+                <div class="card-body">
+                    <p>Bienvenido de nuevo, por favor  ingresa tus datos</p>
+                    <form #f="ngForm" (ngSubmit)="iniciarSesion()">
+                        <div class="mb-3">
+                            <label class="col-sm-auto col-form-label" style="color: #355B3E;">Email: </label>
+                            <div class="col-sm-10">
+                                <input #email="ngModel" class="form-control"
+                                    [ngClass]="email.invalid && email.dirty? 'is-invalid' : '' " type="email"
+                                    name="email" [(ngModel)]="sesionDTO.email" required email required />
+                            </div>
+                        </div>
 
-    <div>
-        <label>Contraseña: </label>
-        <input type="password" name="password" [(ngModel)]="sesionDTO.password" required />
+                        <div class="mb-3">
+                            <label class="col-sm-auto col-form-label" style="color: #355B3E;">Contraseña: </label>
+                            <div class="col-sm-10">
+                                <input #password="ngModel" class="form-control"
+                                    [ngClass]="password.invalid && password.dirty? 'is-invalid' : '' " type="password"
+                                    name="password" [(ngModel)]="sesionDTO.password" required />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button class="btn btn-log-in" style="flex-grow: 1;" type="submit" [disabled]="f.invalid" (click)="iniciarSesion()">LogIn</button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-sing-in" style="flex-grow: 1;" type="button" (click)="singIn()" >Sing In</button>
+                            </div>
+                        </div>
+                    </form>
+                    <app-alerta [alerta]="alerta"></app-alerta>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="relleno"></div>
+            <img src="https://res.cloudinary.com/dzp0nptjr/image/upload/v1716345190/lifestyle-woman-grocery-shopping_1_zs1217.png" class="imagen" >
+        </div>
     </div>
-
-    <button type="submit" [disabled]="f.invalid">LogIn</button>
-</form>
+</div>

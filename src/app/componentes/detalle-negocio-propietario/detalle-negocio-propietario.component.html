@@ -1,2 +1,81 @@
-<p>{{negocio | json}}</p>
-<app-alerta [alerta]="alerta"></app-alerta>
+<main class="d-flex flex-nowrap">
+    <app-sidebar></app-sidebar>
+    <div class="d-flex flex-column flex-shrink-0" style="flex-grow: 1;">
+        <div class="card-header ps-5 pt-4 text-center card-title">
+            <h5>Tu Negocio</h5>
+        </div>
+        <div class="divider"></div>
+        <div class="container">
+            <div class="card">
+                <div class="card-title text-center">
+                    <h3>{{negocio.nombre}}</h3>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-8">
+                        <p>{{negocio.descripcion}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="col-sm-12">
+                            <div id="carouselExampleRide-{{negocio.codigoNegocio}}" class="carousel slide"
+                                data-bs-ride="true">
+                                <div class="carousel-inner">
+                                    @for (imagen of negocio.imagenes; track $index){
+                                    <div class="carousel-item" [ngClass]="$index==0 ? 'active': ''">
+                                        <img src={{imagen}} class="d-block w-100" alt="">
+                                    </div>
+                                    }
+                                </div>
+                                <button class="carousel-control-prev" type="button"
+                                    [attr.data-bs-target]="'#carouselExampleRide-'" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button"
+                                    [attr.data-bs-target]="'#carouselExampleRide-'" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Calificacion</h5>
+                        <p>{{negocio.calificacionPromedio}} Estrellas</p>
+                        <p>Telefonos: </p>
+                        @for(telefono of negocio.telefonos; track $index){
+                        <p>{{telefono}}</p>
+                        }
+                        <p>Direccion: {{negocio.direccion}}</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Horarios</h5>
+                        @for(horario of negocio.horarios; track $index){
+                        <p>{{horario.dia}}: {{horario.horaInicio}} - {{horario.horaFin}}</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-custom" type="button" >Regresar</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-custom" type="button">Editar</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-custom" type="button">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
