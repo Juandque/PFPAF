@@ -14,10 +14,12 @@ import { InformacionNegocioComponent } from './componentes/informacion-negocio/i
 import { LoginGuard } from './servicios/permiso.service';
 import { ActualizarNegocioPropioComponent } from './componentes/actualizar-negocio-propio/actualizar-negocio-propio.component';
 import { ComentariosNegocioPropioComponent } from './componentes/comentarios-negocio-propio/comentarios-negocio-propio.component';
+import { BusquedaComponent } from './componentes/busqueda/busqueda.component';
 export const routes: Routes = [
 { path: '', component: InicioComponent },
 { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
 { path: 'registro', component: RegistroComponent, canActivate: [LoginGuard] },
+{ path: "busqueda/:texto", component: BusquedaComponent },
 { path: "gestion-negocios", component: GestionNegociosComponent },
 { path: "explorar-negocios", component: ExplorarNegociosComponent},
 { path: "favoritos", component: FavoritosComponent},

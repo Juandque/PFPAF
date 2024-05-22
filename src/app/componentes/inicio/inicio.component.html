@@ -1,5 +1,14 @@
 <main class="d-flex flex-nowrap">
     <app-sidebar></app-sidebar>
-    <div id="mapa"></div>
+    <div id="mapa">
+        <form role="search" (submit)="iraBusqueda(textoBusqueda.value)" class="search-form">
+            <div class="input-group">
+                <input #textoBusqueda type="search" class="form-control" placeholder="Buscar..." aria-label="search">
+                <button type="button" class="btn btn-custom">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </form>
+    </div>
 </main>
 

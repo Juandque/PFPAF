@@ -1,4 +1,5 @@
 import { TipoNegocio } from "../models/tipo-negocio";
+import { Ubicacion } from "../models/ubicacion";
 
 export class ItemListarNegociosDTO {
     constructor(
@@ -10,6 +11,7 @@ export class ItemListarNegociosDTO {
         public horaCierre: string='',
         public estadoActual: string='',
         public direccion: string='',
-        public imagenes: string[]= []
+        public imagenes: string[]= [],
+        public ubicacion: Ubicacion= new Ubicacion()
     ){}
 }
