@@ -40,14 +40,18 @@ export class CrearNegocioComponent {
     this.crearNegocioDTO.telefonos= this.telefonos;
     this.crearNegocioDTO.codigoUsuario=this.tokenService.getCodigo();
     if(this.crearNegocioDTO.codigoUsuario!=null && this.crearNegocioDTO.codigoUsuario!=""){
-      this.negocioService.crear(this.crearNegocioDTO).subscribe({
-        next: (data) => {
-          this.alerta= new Alerta(data.respuesta, "succes");
-        },
-        error: (error) => {
-          this.alerta= new Alerta(error.error.respuesta, "danger");
-        }
-      });
+      if(this.crearNegocioDTO.imagenes!=null){
+        this.negocioService.crear(this.crearNegocioDTO).subscribe({
+          next: (data) => {
+            this.alerta= new Alerta(data.respuesta, "succes");
+          },
+          error: (error) => {
+            this.alerta= new Alerta(error.error.respuesta, "danger");
+          }
+        });
+      }else{
+        this.alerta= new Alerta("Debe agregar imagenes", "warning");
+      }
     }
   }
 
@@ -72,23 +76,18 @@ export class CrearNegocioComponent {
 
   public subirImagen(){
     if(this.archivos != null && this.archivos.length>0){
-      const cantidaFotosAlmacenadas= this.archivos.length;
-      const cantidadFotosSubidas=0;
       for(let i=0; i<this.archivos.length; i++){
         const formData= new FormData();
         formData.append('file', this.archivos[i]);
         this.imagenService.subir(formData).subscribe({
           next: data => {
             this.crearNegocioDTO.imagenes.push(data.respuesta.url);
-            cantidadFotosSubidas+1;
+            this.alerta= new Alerta("Imagen subida correctamente", "success");
           },
           error: error => {
             this.alerta= new Alerta(error.error, "danger");
           }
         });
-      }
-      if(cantidaFotosAlmacenadas==cantidadFotosSubidas){
-        this.alerta= new Alerta("Sus imagenes han sido guardadas", "success");
       }
     }
   }

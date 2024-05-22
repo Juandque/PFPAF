@@ -3,6 +3,7 @@ import mapboxgl from 'mapbox-gl';
 import { Observable } from 'rxjs';
 import { ItemListarNegociosDTO } from '../dto/item-listar-negocios-dto';
 import { ItemMarcadorNegocioDTO } from '../dto/item-marcador-negocio-dto';
+import { Ubicacion } from '../models/ubicacion';
 
 @Injectable({
   providedIn: 'root'
@@ -55,5 +56,9 @@ export class MapaService {
       .setHTML(negocio.nombre))
       .addTo(this.mapa);
     });
+  }
+
+  public pintarMarcador(ubicacion: Ubicacion){
+    new mapboxgl.Marker().setLngLat([ubicacion.longitud,ubicacion.latitud]).addTo(this.mapa);
   }
 }

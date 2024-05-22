@@ -1,1 +1,42 @@
-<p>comentarios-negocio-propio works!</p>
+<div class="d-flex flex-column flex-shrink-0" style="flex-grow: 1;">
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            @for(item of comentarios; track $index){
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="{{item.fotoPerfilUsuario}}" class="rounded-3">
+                            </div>
+                            <div class="col-md-10">
+                                <h5 class="card-title">{{item.nombreUsuario}}</h5>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <p class="card-fecha">{{item.calificacion}} Estrellas {{item.fecha}}</p>
+                            <p class="card-text">{{item.mensaje}}</p>
+                        </div>
+                    </div>
+                </div>
+                @if(item.respuesta!=null && item.respuesta!=""){
+                    <div class="col-md-10">
+                        <p class="card-text">Respuesta: {{item.respuesta}}</p>
+                    </div>
+                }@else{
+                    <div>
+                        <form>
+                            <p>Tu Respuesta</p>
+                            <div class="col-md-12">
+                                <textarea #respuesta="ngModel" class="form-control"
+                                    [ngClass]="respuesta.invalid && respuesta.dirty? 'is-invalid' : '' " type="text"
+                                    name="respuesta" [(ngModel)]="responderComentarioDTO.respuesta"></textarea>
+                                <button class="btn btn-custom" (click)="responderComentario(item.codigoComentario)">Responder</button>
+                            </div>
+                        </form>
+                    </div>
+                }
+                <hr>
+            }
+        </div>
+    </div>
+</div>

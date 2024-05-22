@@ -59,7 +59,6 @@
                             <div class="col-sm-10">
                                 <select class="form-select" name="tipoNegocio" [(ngModel)]="obtenerNegocioDTO.tipoNegocio"
                                     required="true">
-                                    <option value="" selected>Seleccione una opcion</option>
                                     @for (item of tiposNegocio; track $index){<option [value]="item">{{item}}</option>}
                                 </select>
                             </div>
@@ -97,22 +96,19 @@
                         <div class="mb-3">
                             <label class="col-sm-2 col-form-label" style="color: #355B3E;">Imagenes: </label>
                             <div>
-                                <h3>Imagenes del Negocio</h3>
+                                <h5>Imagenes del Negocio</h5>
                                 @for(item of imagenesExistentes; track $index){
                                     <div>
                                         <img src="{{item}}" alt="Imagen existente" width="100">
-                                        <button (click)="marcarParaEliminar($index)">
-                                            {{item.seleccionada ? 'Desmarcar' : 'Marcar para Eliminar'}}
-                                        </button>
+                                        <button (click)="eliminarImagen(item)" class="btn btn-custom"><i class="fa-solid fa-trash"></i></button>
                                     </div>
                                 }
-                                <button type="submit" class="btn btn-custom" (click)="eliminarImagenes()">Eliminar Imagenes Seleccionadas</button>
                             </div>
                             <div class="col-sm-10">
                                 <input class="form-control" type="file" name="imagenes" (change)="onFileChange($event)"
                                     multiple required />
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-auto">
                                 <button type="submit" [disabled]="archivos==null" class="btn btn-custom" (click)="subirImagen()">Subir Fotos</button>
                             </div>
                         </div>
@@ -132,7 +128,7 @@
             </div>
             <div class="col">
                 <div class="text-center">
-                    <a routerLink="/crear-negocio" class="btn btn-custom">Cancelar</a>
+                    <a routerLink="/crear-negocio" class="btn btn-custom" (click)="cancerlar()">Cancelar</a>
                 </div>
             </div>
         </div>

@@ -9,7 +9,7 @@ import { NegociosService } from '../../servicios/negocios.service';
 import { MapaService } from '../../servicios/mapa.service';
 import { ImagenService } from '../../servicios/imagen.service';
 import { Horario } from '../../models/horario';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ObtenerNegocioDTO } from '../../dto/obtener-negocio-dto';
 import { ImagenDTO } from '../../dto/imagen-dto';
 
@@ -25,24 +25,26 @@ export class ActualizarNegocioPropioComponent {
   obtenerNegocioDTO: ObtenerNegocioDTO;
   horarios: Horario[];
   telefonos: string[];
-  imagenesExistentes: {url: string, seleccionada:boolean}[]=[];
+  imagenesExistentes!:string[];
   archivos!: FileList;
   tiposNegocio: string[];
   codigoNegocio: string='';
   alerta!: Alerta;
   
-  constructor(private negociosService: NegociosService, private mapaService: MapaService, private imagenService: ImagenService, private route: ActivatedRoute){
+  constructor(private negociosService: NegociosService, private mapaService: MapaService, private imagenService: ImagenService, private route: ActivatedRoute, private router:Router){
     this.actualizarNegocioDTO= new ActualizarNegocioDTO();
     this.obtenerNegocioDTO= new ObtenerNegocioDTO();
     this.route.params.subscribe((params) => {
       this.codigoNegocio=params['codigo'];
       this.obtenerNegocio();
     });
-    this.settearImagenes();
-    this.horarios = this.obtenerNegocioDTO.horarios;
-    this.telefonos = this.obtenerNegocioDTO.telefonos
+    this.horarios = [new Horario()];
+    this.telefonos = [""];
     this.tiposNegocio = [];
     this.cargarTiposNegocio();
+    this.setHorarios();
+    this.setTelefonos();
+    this.settearImagenes();
   }
 
   private cargarTiposNegocio() {
@@ -54,17 +56,23 @@ export class ActualizarNegocioPropioComponent {
     console.log(this.horarios.length);
   }
 
+  public setHorarios(){
+    this.horarios=this.obtenerNegocioDTO.horarios;
+  }
+
   public agregarTelefono() {
     this.telefonos.push("");
   }
 
+  public setTelefonos(){
+    this.telefonos=this.obtenerNegocioDTO.telefonos;
+  }
+
   public settearImagenes(){
-    const urlsRecibidas: string[]= this.obtenerNegocioDTO.imagenes;
-    this.imagenesExistentes= urlsRecibidas.map(url => ({url, seleccionada:false}))
+    this.imagenesExistentes=this.obtenerNegocioDTO.imagenes;
   }
 
   public marcarParaEliminar(indice: number) {
-    this.imagenesExistentes[indice].seleccionada = !this.imagenesExistentes[indice].seleccionada;
   }
 
   public onFileChange(event: any) {
@@ -78,6 +86,11 @@ export class ActualizarNegocioPropioComponent {
       this.negociosService.obtenerNegocio(this.codigoNegocio).subscribe({
         next: (data) => {
           this.obtenerNegocioDTO=data.respuesta;
+          console.log(this.obtenerNegocioDTO);
+          this.setHorarios();
+          this.setTelefonos();
+          this.settearImagenes();
+          this.ngOnInit();
         },
         error: (error) => {
           this.alerta= new Alerta(error.error.respuesta, "danger");
@@ -99,6 +112,7 @@ export class ActualizarNegocioPropioComponent {
       horarios: this.obtenerNegocioDTO.horarios, 
       ubicacion: this.obtenerNegocioDTO.ubicacion
     }
+    console.log(this.actualizarNegocioDTO);
     if(this.actualizarNegocioDTO.codigo!=null && this.actualizarNegocioDTO.codigo!=""){
       this.negociosService.actualizarNegocio(this.actualizarNegocioDTO).subscribe({
         next: (data) => {
@@ -115,49 +129,49 @@ export class ActualizarNegocioPropioComponent {
 
   public subirImagen(){
     if(this.archivos != null && this.archivos.length>0){
-      const cantidaFotosAlmacenadas= this.archivos.length;
-      const cantidadFotosSubidas=0;
       for(let i=0; i<this.archivos.length; i++){
         const formData= new FormData();
         formData.append('file', this.archivos[i]);
         this.imagenService.subir(formData).subscribe({
           next: data => {
             this.obtenerNegocioDTO.imagenes.push(data.respuesta.url);
-            cantidadFotosSubidas+1;
+            this.alerta= new Alerta("Imagen cargada con exito", "success");
           },
           error: error => {
             this.alerta= new Alerta(error.error, "danger");
           }
         });
       }
-      if(cantidaFotosAlmacenadas==cantidadFotosSubidas){
-        this.alerta= new Alerta("Sus imagenes han sido guardadas", "success");
-      }
     }
   }
 
-  public eliminarImagenes(){
-    const imagenesEliminar = this.imagenesExistentes.filter(img => img.seleccionada);
-    if(imagenesEliminar.length>0){
-      const cantidaFotosEliminar= imagenesEliminar.length;
-      const cantidadFotosEliminadas=0;
-      for(let i=0; i<imagenesEliminar.length; i++){
-        this.imagenService.eliminar(new ImagenDTO(i+"", imagenesEliminar[i].url)).subscribe({
+  public eliminarImagen(urlImagen: string){
+    if(urlImagen!=null && urlImagen!=""){
+        this.imagenService.eliminar(new ImagenDTO('1', urlImagen)).subscribe({
           next: (data) => {
-            this.imagenesExistentes = this.imagenesExistentes.filter(img => img.url !== this.imagenesExistentes[i].url);
-            cantidadFotosEliminadas+1;
+            this.imagenesExistentes = this.imagenesExistentes.filter(img => img !== urlImagen);
+            this.alerta= new Alerta("Imagen Eliminada", "success");
+            this.obtenerNegocioDTO.imagenes= this.imagenesExistentes;
           },
           error: (error) => {
             this.alerta= new Alerta(error.error.respuesta, "danger");
           }
         });
-      }
-      if(cantidaFotosEliminar==cantidadFotosEliminadas){
-        this.alerta= new Alerta("Las imagenes fueron eliminadas", "success");
-      }
     }else{
       this.alerta= new Alerta("Debe seleccionar imagenes para eliminar", "warning");
-    }
-    this.obtenerNegocioDTO.imagenes= this.imagenesExistentes.map(img => img.url);
+    }    
+  }
+
+  ngOnInit():void{
+    this.mapaService.crearMapa();
+    this.mapaService.pintarMarcador(this.obtenerNegocioDTO.ubicacion);
+    this.mapaService.agregarMarcador().subscribe((marcador) =>{
+      this.obtenerNegocioDTO.ubicacion.latitud= marcador.lat;
+      this.obtenerNegocioDTO.ubicacion.longitud= marcador.lng;
+    });
+  }
+
+  public cancerlar(){
+    this.router.navigate(["/inicio"]);
   }
 }

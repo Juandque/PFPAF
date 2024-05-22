@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="col-sm-12">
-                            <div id="carouselExampleRide-{{negocio.codigoNegocio}}" class="carousel slide"
+                            <div id="carouselExampleRide" class="carousel slide"
                                 data-bs-ride="true">
                                 <div class="carousel-inner">
                                     @for (imagen of negocio.imagenes; track $index){
@@ -26,13 +26,11 @@
                                     </div>
                                     }
                                 </div>
-                                <button class="carousel-control-prev" type="button"
-                                    [attr.data-bs-target]="'#carouselExampleRide-'" data-bs-slide="prev">
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Previous</span>
                                 </button>
-                                <button class="carousel-control-next" type="button"
-                                    [attr.data-bs-target]="'#carouselExampleRide-'" data-bs-slide="next">
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="next">
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Next</span>
                                 </button>
@@ -43,7 +41,7 @@
                 <hr>
                 <div class="row">
                     <div class="col-md-6">
-
+                        <app-comentarios-negocio-propio></app-comentarios-negocio-propio>
                     </div>
                     <div class="col-md-3">
                         <h5>Calificacion</h5>
@@ -67,13 +65,13 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <button class="btn btn-custom" type="button" >Regresar</button>
+                    <button class="btn btn-custom" type="button" (click)="regresar()" >Regresar</button>
                 </div>
                 <div class="col">
-                    <button class="btn btn-custom" type="button">Editar</button>
+                    <button class="btn btn-custom" type="button" (click)="editar()">Editar</button>
                 </div>
                 <div class="col">
-                    <button class="btn btn-custom" type="button">Eliminar</button>
+                    <button class="btn btn-custom" type="button" (click)="eliminar()">Eliminar</button>
                 </div>
             </div>
         </div>

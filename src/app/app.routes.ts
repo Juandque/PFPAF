@@ -13,6 +13,7 @@ import { ComentariosNegocioComponent } from './componentes/comentarios-negocio/c
 import { InformacionNegocioComponent } from './componentes/informacion-negocio/informacion-negocio.component';
 import { LoginGuard } from './servicios/permiso.service';
 import { ActualizarNegocioPropioComponent } from './componentes/actualizar-negocio-propio/actualizar-negocio-propio.component';
+import { ComentariosNegocioPropioComponent } from './componentes/comentarios-negocio-propio/comentarios-negocio-propio.component';
 export const routes: Routes = [
 { path: '', component: InicioComponent },
 { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
@@ -24,6 +25,7 @@ export const routes: Routes = [
 { path: "crear-negocio", component: CrearNegocioComponent },
 { path: "actualizar-negocio-propio/:codigo", component: ActualizarNegocioPropioComponent},
 { path: "comentarios-negocio/:codigo", component: ComentariosNegocioComponent},
+{ path: "comentarios-negocio-propio/:codigo", component: ComentariosNegocioPropioComponent},
 { path: "informacion-negocio/:codigo", component: InformacionNegocioComponent},
 { path: "detalle-negocio-propietario/:codigo", component: DetalleNegocioPropietarioComponent },
 { path: "perfil/:codigo", component: PerfilComponent},
