@@ -37,4 +37,5 @@
 .scrollable-container {
     max-height: 920px; /* ajusta según sea necesario */
     overflow-y: auto; /* habilita el scroll vertical cuando sea necesario */
+    max-width: 550px;
 }

@@ -22,6 +22,7 @@ export class DetalleNegocioComponent {
   codigoNegocio: string='';
   mostrarComponente: string='descripcion';
   alerta!: Alerta;
+
   constructor(private route: ActivatedRoute,private publicoService: PublicoService){
     this.route.params.subscribe((params) => {
       this.codigoNegocio=params['codigo'];

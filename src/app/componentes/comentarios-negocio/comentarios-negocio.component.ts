@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ItemComentarioDTO } from '../../dto/item-comentario-dto';
@@ -8,11 +8,12 @@ import { CrearComentarioDTO } from '../../dto/crear-comentario-dto';
 import { PublicoService } from '../../servicios/publico.service';
 import { TokenService } from '../../servicios/token.service';
 import { Alerta } from '../../dto/alerta';
+import { AlertaComponent } from '../alerta/alerta.component';
 
 @Component({
   selector: 'app-comentarios-negocio',
   standalone: true,
-  imports: [CommonModule,RouterModule,FormsModule],
+  imports: [CommonModule,RouterModule,FormsModule,AlertaComponent],
   templateUrl: './comentarios-negocio.component.html',
   styleUrl: './comentarios-negocio.component.css'
 })
@@ -22,22 +23,29 @@ export class ComentariosNegocioComponent {
   estadoCamposCrearComentario: string='ocultar';
   codigoNegocio!: string ;
   alerta!: Alerta;
+  
   constructor(private route: ActivatedRoute, private publicosService: PublicoService, private comentariosService: ComentariosService, private tokenService: TokenService){
-    this.crearComentarioDTO= new CrearComentarioDTO();
     this.comentarios=[];
-    this.listar();
+    this.route.params.subscribe((params) =>{
+      this.codigoNegocio=params['codigo'];
+      this.listar();
+    })
+    this.crearComentarioDTO= new CrearComentarioDTO();
   }
 
   public listar(){
-    this.codigoNegocio= this.route.snapshot.paramMap.get('codigo') as string;
-    this.publicosService.listarComentariosNegocios(this.codigoNegocio).subscribe({
-      next: (data) =>{
-        this.comentarios= data.respuesta;
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    })
+    if(this.codigoNegocio!=null && this.codigoNegocio!=""){
+      this.publicosService.listarComentariosNegocios(this.codigoNegocio).subscribe({
+        next: (data) =>{
+          this.comentarios= data.respuesta;
+        },
+        error: (error) => {
+          this.alerta= new Alerta(error.error.respuesta, "danger");
+        }
+      });
+    }else{
+      this.alerta= new Alerta("Error interno, intente mas tarde", "warning");
+    }
   }
 
   comentar(){
@@ -63,7 +71,7 @@ export class ComentariosNegocioComponent {
           }
         })
       }else{
-        this.alerta= new Alerta("Debe escribir un comentario para poder punlicar", "danger");
+        this.alerta= new Alerta("Debe escribir un comentario para poder publicar", "danger");
       }
     }else{
       this.alerta= new Alerta("Ocurrio un error al publicar su comentario, Intente de nuevo", "danger");

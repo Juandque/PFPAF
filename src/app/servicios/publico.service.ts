@@ -12,7 +12,7 @@ export class PublicoService {
   constructor(private http: HttpClient) { }
 
   public listarComentariosNegocios(codigoNegocio: string):Observable<MensajeDTO>{
-    return this.http.get<MensajeDTO>(`${this.publicoURL}/istar-comentarios-negocio/${codigoNegocio}`);
+    return this.http.get<MensajeDTO>(`${this.publicoURL}/listar-comentarios-negocio/${codigoNegocio}`);
   }
 
   public buscarNegociosPorNombre(busqueda: string): Observable<MensajeDTO>{

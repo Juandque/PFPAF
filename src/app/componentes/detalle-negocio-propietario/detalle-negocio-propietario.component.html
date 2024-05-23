@@ -1,4 +1,4 @@
-<main class="d-flex flex-nowrap">
+<main class="d-flex flex-nowrap screen">
     <app-sidebar></app-sidebar>
     <div class="d-flex flex-column flex-shrink-0" style="flex-grow: 1;">
         <div class="card-header ps-5 pt-4 text-center card-title">
@@ -41,7 +41,9 @@
                 <hr>
                 <div class="row">
                     <div class="col-md-6">
-                        <app-comentarios-negocio-propio></app-comentarios-negocio-propio>
+                        <div class="scrollable-container">
+                            <app-comentarios-negocio-propio></app-comentarios-negocio-propio>
+                        </div>
                     </div>
                     <div class="col-md-3">
                         <h5>Calificacion</h5>

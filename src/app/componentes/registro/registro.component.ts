@@ -6,6 +6,7 @@ import { ImagenService } from '../../servicios/imagen.service';
 import { AlertaComponent } from '../alerta/alerta.component';
 import { Alerta } from '../../dto/alerta';
 import { AuthService } from '../../servicios/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registro',
@@ -23,7 +24,7 @@ export class RegistroComponent {
   archivos!: FileList;
   alerta!: Alerta;
 
-  constructor(private imagenService: ImagenService, private authService: AuthService) {
+  constructor(private imagenService: ImagenService, private authService: AuthService, private router: Router) {
     this.ciudades = [];
     this.cargarCiudades();
     this.registroClienteDTO = new RegistroClienteDTO();
@@ -35,6 +36,7 @@ export class RegistroComponent {
       this.authService.registrarCliente(this.registroClienteDTO).subscribe({
         next: (data) => {
           this.alerta= new Alerta(data.respuesta, "success");
+          this.enviarALogin();
         },
         error: (error) => {
           this.alerta= new Alerta(error.error.respuesta, "danger");
@@ -59,6 +61,10 @@ export class RegistroComponent {
     }
   }
 
+  public enviarALogin(){
+    this.router.navigate(["/login"]);
+  }
+
   limpiar() {
     this.registroClienteDTO = {
       nombre: '',
@@ -76,6 +82,7 @@ export class RegistroComponent {
     if(this.archivos != null && this.archivos.length>0){
       const formData=new FormData();
       formData.append('file', this.archivos[0]);
+      console.log( this.archivos[0]);
       this.imagenService.subir(formData).subscribe({
         next: data => {
           this.registroClienteDTO.fotoPerfil = data.respuesta.url;

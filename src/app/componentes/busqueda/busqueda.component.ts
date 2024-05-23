@@ -35,6 +35,7 @@ export class BusquedaComponent implements OnInit{
     this.publicoService.buscarNegociosPorNombre(this.textoBusqueda).subscribe({
       next: (data) => {
         this.resultados=data.respuesta;
+        this.mapaService.pintarMarcadores(this.resultados);
       },
       error: (error) => {
         console.log(error.error.respuesta);

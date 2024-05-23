@@ -1,9 +1,12 @@
 <div class="d-flex flex-column flex-shrink-0" style="flex-grow: 1;">
     <div class="row">
         <div class="col-md-12 mb-4">
-            <div *ngIf="estadoCamposCrearComentario==='ocultar'">
+            @if(estadoCamposCrearComentario=='ocultar'){
+            <div>
                 <button class="btn btn-custom" (click)="comentar()"><i class="fa-solid fa-pen-to-square"></i> Escribe un Comentario</button>
             </div>
+            }
+            @if(estadoCamposCrearComentario=='mostrar'){
             <div *ngIf="estadoCamposCrearComentario==='mostrar'">
                 <div class="row">
                     <div class="col-md-8">
@@ -23,7 +26,9 @@
                         <button class="btn btn-custom mt-3" (click)="cancelar()">Cancelar</button>
                     </div>
                 </div>
+                <app-alerta [alerta]="alerta"></app-alerta>
             </div>
+            }
             <hr>
             @for(item of comentarios; track $index){
                 <div class="card">

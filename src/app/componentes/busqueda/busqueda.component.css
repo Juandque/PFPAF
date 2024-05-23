@@ -58,4 +58,7 @@ hr {
     /* ajusta según sea necesario */
     overflow-y: auto;
     /* habilita el scroll vertical cuando sea necesario */
+    max-width: 550px;
+    min-width: 550px;
+
 }
