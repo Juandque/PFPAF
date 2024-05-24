@@ -28,6 +28,7 @@ export class ActualizarNegocioPropioComponent {
   imagenesExistentes!:string[];
   archivos!: FileList;
   tiposNegocio: string[];
+  dias: string[];
   codigoNegocio: string='';
   alerta!: Alerta;
   
@@ -41,19 +42,29 @@ export class ActualizarNegocioPropioComponent {
     this.horarios = [new Horario()];
     this.telefonos = [""];
     this.tiposNegocio = [];
+    this.dias=[];
     this.cargarTiposNegocio();
     this.setHorarios();
     this.setTelefonos();
     this.settearImagenes();
+    this.cargarDias();
   }
 
   private cargarTiposNegocio() {
     this.tiposNegocio = ["PANADERIA", "RESTAURANTE", "LIBRERIA", "GIMNASIO", "CAFETERIA", "BAR", "DISCOTECA", "PELUQUERIA", "SUPERMERCADO", "TIENDA", "OTRO"];
   }
 
+  private cargarDias(){
+    this.dias=["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"];
+  }
+
   public agregarHorario() {
     this.horarios.push(new Horario());
     console.log(this.horarios.length);
+  }
+
+  public eliminarHorario(index: number){
+    this.horarios.splice(index,1);
   }
 
   public setHorarios(){
@@ -62,6 +73,10 @@ export class ActualizarNegocioPropioComponent {
 
   public agregarTelefono() {
     this.telefonos.push("");
+  }
+
+  public eliminarTelefono(index: number){
+    this.telefonos.splice(index,1);
   }
 
   public setTelefonos(){
@@ -117,6 +132,7 @@ export class ActualizarNegocioPropioComponent {
       this.negociosService.actualizarNegocio(this.actualizarNegocioDTO).subscribe({
         next: (data) => {
           this.alerta= new Alerta(data.respuesta, "success");
+          this.router.navigate(["/detalle-negocio-propietario/",this.obtenerNegocioDTO.codigoNegocio]);
         },
         error: (error) => {
           this.alerta= new Alerta(error.error.respuesta, "danger");
@@ -172,6 +188,6 @@ export class ActualizarNegocioPropioComponent {
   }
 
   public cancerlar(){
-    this.router.navigate(["/inicio"]);
+    this.router.navigate(["/gestion-negocios"]);
   }
 }

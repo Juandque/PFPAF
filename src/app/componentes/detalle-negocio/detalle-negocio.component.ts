@@ -9,6 +9,11 @@ import { ComentariosNegocioComponent } from '../comentarios-negocio/comentarios-
 import { PublicoService } from '../../servicios/publico.service';
 import { Alerta } from '../../dto/alerta';
 import { AlertaComponent } from '../alerta/alerta.component';
+import { Ubicacion } from '../../models/ubicacion';
+import { MapaService } from '../../servicios/mapa.service';
+import { ClienteService } from '../../servicios/cliente.service';
+import { TokenService } from '../../servicios/token.service';
+import { AgregarNegocioFavoritoDTO } from '../../dto/agregar-negocio-favorito-dto';
 
 @Component({
   selector: 'app-detalle-negocio',
@@ -23,7 +28,7 @@ export class DetalleNegocioComponent {
   mostrarComponente: string='descripcion';
   alerta!: Alerta;
 
-  constructor(private route: ActivatedRoute,private publicoService: PublicoService){
+  constructor(private route: ActivatedRoute,private publicoService: PublicoService, private mapaService: MapaService, private clienteService: ClienteService, private tokenService: TokenService){
     this.route.params.subscribe((params) => {
       this.codigoNegocio=params['codigo'];
       this.obtenerNegocio();
@@ -48,5 +53,29 @@ export class DetalleNegocioComponent {
 
   mostrarComentarios(){
     this.mostrarComponente='comentarios';
+  }
+
+  mostrarRuta(ubicacion: Ubicacion){
+    this.mapaService.showRoute([ubicacion.longitud, ubicacion.latitud]);
+  }
+
+  public accionFavorito(){
+    const codigoUsuario=this.tokenService.getCodigo();
+    if(this.codigoNegocio!= null && this.codigoNegocio!= ""){
+      this.clienteService.agregarFavorito(new AgregarNegocioFavoritoDTO(codigoUsuario, this.codigoNegocio)).subscribe({
+        next: (data) => {
+          this.alerta= new Alerta(data.respuesta, "success");
+        },
+        error: (error) => {
+          this.alerta= new Alerta(error.error.respuesta, "danger");
+        }
+      });
+    }else{
+      this.alerta= new Alerta("Ocurrio un error interno, intenta mas tarde", "warning");
+    }
+  }
+
+  ngOnInit():void{
+    this.mapaService.crearMapa();
   }
 }

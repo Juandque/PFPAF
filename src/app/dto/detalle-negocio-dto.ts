@@ -1,3 +1,5 @@
+import { Ubicacion } from "../models/ubicacion";
+
 export class DetalleNegocioDTO {
     constructor(
         public codigo: string='',
@@ -7,6 +9,7 @@ export class DetalleNegocioDTO {
         public tipoNegocio: string='',
         public horaCierre: string='',
         public estadoActual: string='',
-        public imagenes: string[]=[]
+        public imagenes: string[]=[],
+        public ubicacion: Ubicacion= new Ubicacion()
     ){}
 }

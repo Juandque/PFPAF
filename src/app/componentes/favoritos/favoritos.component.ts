@@ -9,11 +9,12 @@ import { TokenService } from '../../servicios/token.service';
 import { Alerta } from '../../dto/alerta';
 import { ClienteService } from '../../servicios/cliente.service';
 import { AgregarNegocioFavoritoDTO } from '../../dto/agregar-negocio-favorito-dto';
+import { AlertaComponent } from '../alerta/alerta.component';
 
 @Component({
   selector: 'app-favoritos',
   standalone: true,
-  imports: [CommonModule, RouterModule, SidebarComponent],
+  imports: [CommonModule, RouterModule, SidebarComponent, AlertaComponent],
   templateUrl: './favoritos.component.html',
   styleUrl: './favoritos.component.css'
 })
@@ -48,6 +49,7 @@ export class FavoritosComponent {
       this.clienteService.agregarFavorito(new AgregarNegocioFavoritoDTO(codigoUsuario,codigoNegocio)).subscribe({
         next: (data) => {
           this.alerta= new Alerta(data.respuesta, "success");
+          this.listarNegocios();
         },
         error: (error) => {
           this.alerta= new Alerta(error.error.respuesta, "danger");

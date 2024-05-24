@@ -65,6 +65,8 @@ export class ComentariosNegocioComponent {
         this.comentariosService.crearComentario(this.crearComentarioDTO).subscribe({
           next: (data) => {
             this.alerta= new Alerta(data.respuesta, "success");
+            this.cancelar();
+            this.listar();
           },
           error: (error) => {
             this.alerta= new Alerta(error.error.respuesta, "danger");

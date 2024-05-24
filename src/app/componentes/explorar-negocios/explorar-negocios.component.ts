@@ -9,11 +9,12 @@ import { FormsModule } from '@angular/forms';
 import { MapaService } from '../../servicios/mapa.service';
 import { PublicoService } from '../../servicios/publico.service';
 import { Alerta } from '../../dto/alerta';
+import { AlertaComponent } from '../alerta/alerta.component';
 
 @Component({
   selector: 'app-explorar-negocios',
   standalone: true,
-  imports: [CommonModule, RouterModule, SidebarComponent, FormsModule],
+  imports: [CommonModule, RouterModule, SidebarComponent, FormsModule, AlertaComponent],
   templateUrl: './explorar-negocios.component.html',
   styleUrl: './explorar-negocios.component.css'
 })

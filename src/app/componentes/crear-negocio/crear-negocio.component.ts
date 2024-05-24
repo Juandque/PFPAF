@@ -10,6 +10,8 @@ import { TokenService } from '../../servicios/token.service';
 import { Alerta } from '../../dto/alerta';
 import { ImagenService } from '../../servicios/imagen.service';
 import { AlertaComponent } from '../alerta/alerta.component';
+import { Router } from '@angular/router';
+import { ImagenDTO } from '../../dto/imagen-dto';
 
 
 @Component({
@@ -24,15 +26,20 @@ export class CrearNegocioComponent {
   horarios: Horario[];
   telefonos: string[];
   archivos!: FileList;
+  imagenesExistentes:string[];
   tiposNegocio: string[];
+  dias: string[];
   alerta!: Alerta;
 
-  constructor(private negocioService: NegociosService, private mapaService: MapaService, private tokenService: TokenService, private imagenService: ImagenService) {
+  constructor(private negocioService: NegociosService, private mapaService: MapaService, private tokenService: TokenService, private imagenService: ImagenService, private router: Router) {
     this.crearNegocioDTO = new CrearNegocioDTO();
     this.horarios = [new Horario()];
     this.telefonos = [""]
     this.tiposNegocio = [];
+    this.dias=[];
+    this.imagenesExistentes=[];
     this.cargarTiposNegocio();
+    this.cargarDias();
   }
 
   public crearNegocio() {
@@ -44,6 +51,7 @@ export class CrearNegocioComponent {
         this.negocioService.crear(this.crearNegocioDTO).subscribe({
           next: (data) => {
             this.alerta= new Alerta(data.respuesta, "succes");
+            this.router.navigate(["/gestion-negocios"])
           },
           error: (error) => {
             this.alerta= new Alerta(error.error.respuesta, "danger");
@@ -57,11 +65,26 @@ export class CrearNegocioComponent {
 
   public agregarHorario() {
     this.horarios.push(new Horario());
-    console.log(this.horarios.length);
+  }
+
+  public eliminarHorario(index: number){
+    this.horarios.splice(index,1);
   }
 
   public agregarTelefono() {
     this.telefonos.push("");
+  }
+
+  public eliminarTelefono(index: number){
+    this.telefonos.splice(index,1);
+  }
+
+  public settearImagenes(){
+    this.imagenesExistentes=this.crearNegocioDTO.imagenes;
+  }
+
+  public cancelar(){
+    this.router.navigate(["/gestion-negocios"]);
   }
 
   public onFileChange(event: any) {
@@ -74,6 +97,10 @@ export class CrearNegocioComponent {
     this.tiposNegocio = ["PANADERIA", "RESTAURANTE", "LIBRERIA", "GIMNASIO", "CAFETERIA", "BAR", "DISCOTECA", "PELUQUERIA", "SUPERMERCADO", "TIENDA", "OTRO"];
   }
 
+  private cargarDias(){
+    this.dias=["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"];
+  }
+
   public subirImagen(){
     if(this.archivos != null && this.archivos.length>0){
       for(let i=0; i<this.archivos.length; i++){
@@ -82,6 +109,7 @@ export class CrearNegocioComponent {
         this.imagenService.subir(formData).subscribe({
           next: data => {
             this.crearNegocioDTO.imagenes.push(data.respuesta.url);
+            this.imagenesExistentes.push(data.respuesta.url);
             this.alerta= new Alerta("Imagen subida correctamente", "success");
           },
           error: error => {
@@ -89,6 +117,23 @@ export class CrearNegocioComponent {
           }
         });
       }
+    }
+  }
+
+  public eliminarImagen(urlImagen:string, index: number){
+    if(urlImagen!=null && urlImagen!=""){
+      this.imagenService.eliminar(new ImagenDTO('1', urlImagen)).subscribe({
+        next: (data) => {
+          this.crearNegocioDTO.imagenes.splice(index,1);
+          this.imagenesExistentes.splice(index,1);
+          this.alerta = new Alerta("Imagen Eliminada", "success");
+        },
+        error: (error) => {
+          this.alerta = new Alerta(error.error.respuesta, "danger");
+        }
+      });
+    }else{
+      this.alerta= new Alerta("Debe seleccionar una imagen para eliminar", "warning");
     }
   }
 
