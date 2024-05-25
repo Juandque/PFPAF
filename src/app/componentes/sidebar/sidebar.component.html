@@ -1,40 +1,52 @@
 <div class="d-flex flex-column flex-shrink-0 bg-body rounded-1 border" style="width: 6.2rem;">
-  <div class="d-flex justify-content-center align-items-center pt-2 pb-4">
-    <img src="https://github.com/mdo.png" alt="mdo" width="70" height="70" class="rounded-circle">
-  </div>
+  @if(isLogged){
+    <div class="d-flex justify-content-center align-items-center pt-2 pb-4">
+      <img src="https://github.com/mdo.png" alt="mdo" width="70" height="70" class="rounded-circle">
+    </div>
+  }
   <ul class="nav nav-pills nav-flush flex-column mb-auto text-center menu"> Menú
-    <li class="nav-item pt-2">
-      <a routerLink="/perfil" class="nav-link py-3" aria-current="page" title="Tu Perfil" data-bs-toggle="tooltip" data-bs-placement="right">
-        <i class="fa-solid fa-user fa-pull-rigth fa-2x"></i>
-      </a>
-    </li>
-    <li class="pt-2">
-      <a routerLink="/gestion-negocios" class="nav-link py-3 " title="Tus Negocios" data-bs-toggle="tooltip"
-        data-bs-placement="right">
-        <i class="fa-solid fa-shop fa-pull-rigth fa-2x"></i>
-      </a>
-    </li>
+    @if(isLogged){
+      <li class="nav-item pt-2">
+        <a routerLink="/perfil/{{id}}" class="nav-link py-3" aria-current="page" title="Tu Perfil" data-bs-toggle="tooltip" data-bs-placement="right">
+          <i class="fa-solid fa-user fa-pull-rigth fa-2x"></i>
+        </a>
+      </li>
+    
+      <li class="pt-2">
+        <a routerLink="/gestion-negocios" class="nav-link py-3 " title="Tus Negocios" data-bs-toggle="tooltip"
+          data-bs-placement="right">
+          <i class="fa-solid fa-shop fa-pull-rigth fa-2x"></i>
+        </a>
+      </li>
+    }
     <li class="pt-2">
       <a routerLink="/inicio" class="nav-link py-3 " title="Mapa" data-bs-toggle="tooltip" data-bs-placement="right">
         <i class="fa-solid fa-map-location-dot fa-pull-rigth fa-2x"></i>
       </a>
     </li>
-    <li class="pt-2">
-      <a routerLink="/favoritos" class="nav-link py-3 " title="Tus Favoritos" data-bs-toggle="tooltip" data-bs-placement="right">
-        <i class="fa-solid fa-bookmark fa-pull-rigth fa-2x"></i>
-      </a>
-    </li>
+    @if(isLogged){
+      <li class="pt-2">
+        <a routerLink="/favoritos" class="nav-link py-3 " title="Tus Favoritos" data-bs-toggle="tooltip" data-bs-placement="right">
+          <i class="fa-solid fa-bookmark fa-pull-rigth fa-2x"></i>
+        </a>
+      </li>
+    }
     <li class="pt-2">
       <a routerLink="/explorar-negocios" class="nav-link py-3 " title="Descubre Lugares" data-bs-toggle="tooltip" data-bs-placement="right">
         <i class="fa-solid fa-compass fa-pull-rigth fa-2x"></i>
       </a>
     </li>
   </ul>
-  <ul>
-    <li>
-      <a href="#" class="nav-link py-3 " title="Log Out" data-bs-toggle="tooltip" data-bs-placement="right">
-        <i class="fa-solid fa-arrow-right-from-bracket fa-pull-rigth fa-2x"></i>
-      </a>
-    </li>
-  </ul>
+  @if(isLogged){
+    <ul>
+      <li>
+        <a href="#" class="nav-link py-3 " title="Log Out" data-bs-toggle="tooltip" data-bs-placement="right" (click)="logOut()">
+          <i class="fa-solid fa-arrow-right-from-bracket fa-pull-rigth fa-2x"></i>
+        </a>
+      </li>
+    </ul>
+  }@else {
+    <button type="button" routerLink="/login" class="btn btn-custom me-2 mb-3">Login</button>
+    <button type="button" routerLink="/registro" class="btn btn-custom mb-3">Registro</button>
+  }
 </div>

@@ -1,0 +1,150 @@
+<main class="d-flex flex-nowrap screen">
+    <app-sidebar></app-sidebar>
+    <div class="d-flex flex-column flex-shrink-0" style="flex-grow: 1;">
+        <div class="card-header ps-5 pt-4 pb-4 text-center card-title">
+            <h5 class="mb-0">Actualiza tu Negocio</h5>
+        </div>
+        <div class="divider"></div>
+        <div class="container">
+            <form #f="ngForm">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-5">
+                            <label class="col-sm-2 col-form-label" style="color: #355B3E;">Nombre: </label>
+                            <div class="col-sm-10">
+                                <input #nombre="ngModel" class="form-control"
+                                    [ngClass]="nombre.invalid && nombre.dirty? 'is-invalid' : '' " type="text"
+                                    name="nombre" [(ngModel)]="obtenerNegocioDTO.nombre" required="true" maxlength="50" />
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-auto col-form-label" style="color: #355B3E;">Horarios: </label>
+                            <div class="col-sm-10">
+                                @for (item of horarios; track $index) {
+                                <div class="row mb-2 ">
+                                    <div class="col-sm-10 mb-2">
+                                        <select class="form-select" placeholder="Día" type="text" name="dia-{{$index}}"
+                                            [(ngModel)]="item.dia" required >
+                                            @for (item of dias; track $index){<option [value]="item">{{item}}</option>}
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2 mb-2">
+                                        <button class="btn btn-danger" (click)="eliminarHorario($index)">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-6 mb-2">
+                                        <input class="form-control" placeholder="Hora Inicio" type="time"
+                                            name="horaInicio-{{$index}}" [(ngModel)]="item.horaInicio" required />
+                                    </div>
+                                    <div class="col-sm-6 mb-2">
+                                        <input class="form-control" placeholder="Hora Fin" type="time"
+                                            name="horaFin-{{$index}}" [(ngModel)]="item.horaFin" required />
+                                    </div>
+                                </div>
+                                }
+                            </div>
+                            <div class="col-sm-2 text-end ">
+                                <button class="btn btn-primary" (click)="agregarHorario()">
+                                    <i class="fa-solid fa-circle-plus me-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="col-sm-2 col-form-label" style="color: #355B3E;">Descripcion: </label>
+                            <div class="col-sm-10">
+                                <textarea #descripcion="ngModel" class="form-control"
+                                    [ngClass]="descripcion.invalid && descripcion.dirty? 'is-invalid' : '' " type="text"
+                                    name="descripcion" [(ngModel)]="obtenerNegocioDTO.descripcion" required="true">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="col-sm-auto col-form-label" style="color: #355B3E;">Tipo de Negocio</label>
+                            <div class="col-sm-10">
+                                <select class="form-select" name="tipoNegocio" [(ngModel)]="obtenerNegocioDTO.tipoNegocio"
+                                    required="true">
+                                    @for (item of tiposNegocio; track $index){<option [value]="item">{{item}}</option>}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="col-sm-2 col-form-label" style="color: #355B3E;">Ubicacion: </label>
+                            <div class="col-sm-10">
+                                <div id="mapa"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3 ">
+                            <label class="col-sm-2 col-form-label" style="color: #355B3E;">Direccion: </label>
+                            <div class="row">
+                                <input #direccion="ngModel" class="form-control" type="text" name="direccion"
+                                    [(ngModel)]="obtenerNegocioDTO.direccion" required="true" maxlength="50" />
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="col-sm-2 col-form-label" style="color: #355B3E;"> Telefonos: </label>
+                            <div class="col-sm-10">
+                                @for( item of telefonos; track $index ){
+                                    <div class="row">
+                                        <div class="col-sm-10" >
+                                            <input class="form-control" placeholder="telefono" type="text" name="telefono-{{$index}}" [(ngModel)]="telefonos[$index]" required/>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button class="btn btn-danger" (click)="eliminarTelefono($index)">
+                                                <i class="fa-solid fa-xmark"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="col-sm-2">
+                                <button class="btn btn-primary" (click)="agregarTelefono()">
+                                    <i class="fa-solid fa-circle-plus me-1"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="col-sm-2 col-form-label" style="color: #355B3E;">Imagenes: </label>
+                            <div>
+                                <h5>Imagenes del Negocio</h5>
+                                @for(item of imagenesExistentes; track $index){
+                                    <div>
+                                        <img src="{{item}}" alt="Imagen existente" width="150">
+                                        <button (click)="eliminarImagen(item)" class="btn btn-custom"><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                }
+                            </div>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="file" name="imagenes" (change)="onFileChange($event)"
+                                    multiple required />
+                            </div>
+                            <div class="col-sm-auto">
+                                <button type="submit" [disabled]="archivos==null" class="btn btn-custom" (click)="subirImagen()">Subir Fotos</button>
+                            </div>
+                        </div>
+                    </div>
+                    <app-alerta [alerta]="alerta"></app-alerta>
+                </div>
+            </form>
+        </div>
+        <div class="divider"></div>
+        <div class="row">
+            <div class="col">
+                <div class="text-center">
+                    <button class="btn btn-custom" (click)="actualizarNegocio()">
+                        Actualizar Negocio
+                    </button>
+                </div>
+            </div>
+            <div class="col">
+                <div class="text-center">
+                    <a routerLink="/crear-negocio" class="btn btn-custom" (click)="cancerlar()">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

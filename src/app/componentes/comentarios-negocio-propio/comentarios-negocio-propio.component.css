@@ -1,0 +1,45 @@
+.btn-custom {
+    background-color: #d3d3d3;
+    /* Orange color */
+    border-radius: 20px;
+    border-color: #d3d3d3;
+    color: black;
+    /* White text */
+}
+img{
+    width: 30px;
+    height: 30px;
+}
+.card {
+    background-color: #fff;
+    border-radius: 0px;
+    border-color: #fff;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 19px;
+    font-weight: bold;
+    font-family: Roboto, sans-serif;
+}
+
+.card-text {
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: Roboto, sans-serif;
+}
+
+.card-type {
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: Roboto, sans-serif;
+    color: #8A908D;
+}
+.card-fecha {
+    font-size: 10px;
+    font-family: Roboto, sans-serif;
+    color: #8A908D;
+}

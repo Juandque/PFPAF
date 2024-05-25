@@ -1,8 +1,8 @@
 <main class="d-flex flex-nowrap">
     <app-sidebar></app-sidebar>
-    <div class="d-flex flex-column flex-shrink-0" style="flex-grow: 1;">
+    <div class="d-flex flex-column flex-shrink-0">
         <div class="row ps-3">
-            <div class="col-md-3 mb-4 scrollable-container rounded-1">
+            <div class="col-md-12 mb-4 scrollable-container rounded-1">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">{{negocio.nombre}}</h5>
@@ -13,7 +13,9 @@
                         </div>
                         <div class="row mt-5 mb-5 text-center">
                             <div class="col">
-                                <i class="fa-solid fa-bookmark fa-2x"></i>
+                                <button class="btn" (click)="accionFavorito()">
+                                    <i class="fa-solid fa-bookmark fa-2x"></i>
+                                </button>
                             </div>
                             <div class="col">
                                 <i class="fa-solid fa-share-nodes fa-2x"></i>
@@ -23,7 +25,7 @@
                             </div>
                         </div>
                         <div class="col-sm-12">
-                            <div id="carouselExampleRide-{{negocio.codigo}}" class="carousel slide" data-bs-ride="true">
+                            <div id="carouselExampleRide" class="carousel slide" data-bs-ride="true">
                                 <div class="carousel-inner">
                                     @for (imagen of negocio.imagenes; track $index){
                                     <div class="carousel-item" [ngClass]="$index==0 ? 'active': ''" >
@@ -49,16 +51,22 @@
                                 <button class="btn btn-custom btn block" style="flex-grow: 1;" (click)="mostrarComentarios()">Comentarios</button>
                             </div>
                         </div>
+                        <app-alerta [alerta]="alerta"></app-alerta>
                         <hr>
-                        <div *ngIf="mostrarComponente==='descripcion'">
+                        @if(mostrarComponente=='descripcion'){
+                        <div>
                             <app-informacion-negocio></app-informacion-negocio>
                         </div>
-                        <div *ngIf="mostrarComponente==='comentarios'">
+                        }
+                        @if(mostrarComponente=='comentarios'){
+                        <div>
                             <app-comentarios-negocio></app-comentarios-negocio>
                         </div>
+                        }
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div id="mapa" class="d-flex flex-column flex-shrink-0" style="flex-grow: 1;"></div>
 </main>

@@ -7,16 +7,17 @@
                     <h5 class="mb-0">Tus Lugares Favoritos</h5>
                 </div>
                 <hr>
+                <app-alerta [alerta]="alerta"></app-alerta>
                 @for (item of negocios; track $index) {
                 <div class="container">
                     <div class="row">
                         <div class="flex-column mb-auto">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title" routerLink="/detalle-negocio-propietario/{{item.codigo}}"> {{item.nombre}}</h5>
+                                    <h5 class="card-title" routerLink="/detalle-negocio/{{item.codigo}}"> {{item.nombre}}</h5>
                                     <div class="position-absolute top-0 end-0">
-                                        <button class="btn btn-succes" (click)="agregarFavorito()">
-                                            <i class="fa-solid fa fa-bookmark me-1"></i>
+                                        <button class="btn btn-danger" (click)="agregarFavorito(item.codigo)">
+                                            <i class="fa-solid fa-xmark"></i>
                                         </button>
                                     </div>
                                     <div class="row">

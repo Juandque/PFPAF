@@ -1,4 +1,4 @@
-<main class="d-flex flex-nowrap">
+<main class="d-flex flex-nowrap screen">
     <app-sidebar></app-sidebar>
     <div class="d-flex flex-column flex-shrink-0" style="flex-grow: 1;">
         <div class="card-header ps-5 pt-4 pb-1 text-center card-title">
@@ -42,10 +42,14 @@
                             <div class="col-sm-10 mt-5">
                                 <input class="form-control" type="file" name="fotoPerfil" (change)="onFileChange($event)"/>
                             </div>
+                            <div class="col-sm-2">
+                                <button type="submit" [disabled]="archivos==null" class="btn btn-custom" (click)="subirImagen()">Subir Foto</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </form>
+            <app-alerta [alerta]="alerta"></app-alerta>
         </div>
         <div class="relleno"></div>
         <div class="divider"></div>

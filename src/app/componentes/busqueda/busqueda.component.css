@@ -1,0 +1,64 @@
+.card {
+    background-color: #fff;
+    border-radius: 0px;
+    border-color: #fff;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+.card-title {
+    font-size: 19px;
+    font-weight: bold;
+    font-family: Roboto, sans-serif;
+}
+
+.card-text {
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: Roboto, sans-serif;
+}
+
+.card-type {
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: Roboto, sans-serif;
+    color: #8A908D;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3
+}
+
+.btn-custom {
+    background-color: #d3d3d3;
+    /* Orange color */
+    border-radius: 20px;
+    border-color: #d3d3d3;
+    color: black;
+    /* White text */
+}
+
+hr {
+    border-spacing: 2px;
+}
+
+.scrollable-container {
+    max-height: 920px;
+    /* ajusta según sea necesario */
+    overflow-y: auto;
+    /* habilita el scroll vertical cuando sea necesario */
+    max-width: 550px;
+    min-width: 550px;
+
+}

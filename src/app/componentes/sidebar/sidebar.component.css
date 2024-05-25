@@ -35,6 +35,14 @@
     height: 100vh;
     /* Asigna una altura al contenedor */
 }
+.btn-custom {
+    background-color: #d3d3d3;
+    /* Orange color */
+    border-radius: 20px;
+    border-color: #d3d3d3;
+    color: black;
+    /* White text */
+}
 
 log-out {
     flex: 1;

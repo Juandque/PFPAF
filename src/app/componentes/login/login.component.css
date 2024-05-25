@@ -1,0 +1,66 @@
+.container-fluid {
+    display: flex;
+    /* Enable flexbox layout */
+    height: 100vh;
+    /* Set container height to 100% */
+    width: 100vw;
+    /* Set container width to 100% (optional) */
+    flex-direction: column;
+    /* Center elements vertically */
+    background-color:  #3F7539;
+}
+
+.btn-log-in {
+    background-color: #029664;
+    border-radius: 5px;
+    border-color: #029664;
+    color: white;
+    width: 100%;
+}
+.btn-sing-in {
+    background-color: #fff;
+    border-radius: 5px;
+    border-color: #029664;
+    color: #029664;
+    width: 100%;
+}
+.card {
+    width: 500px;
+    height: 600px;
+    background-color: #fff;
+    border-radius: 0px;
+    border-color: #fff;
+    left: 100px;
+    top: 150px;
+}
+
+.card-body {
+    padding: 50px;
+}
+
+.card-title {
+    padding: 50px;
+    font-size: 19px;
+    font-weight: bold;
+    font-family: Inter, sans-serif;
+}
+
+.card-text {
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: Inter, sans-serif;
+}
+
+.card-type {
+    font-size: 14px;
+    font-family: Inter, sans-serif;
+}
+
+.imagen{
+    position: absolute;
+    top: 200px;
+    left: 900px;
+}
+.relleno{
+    height: 200px;
+}

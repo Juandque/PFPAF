@@ -1,4 +1,4 @@
-<main class="d-flex flex-nowrap">
+<main class="d-flex flex-nowrap screen">
     <app-sidebar></app-sidebar>
     <div class="d-flex flex-column flex-shrink-0">
         <div class="row ps-3">
@@ -7,6 +7,7 @@
                     <h5 class="mb-0">Tus Negocios</h5>
                 </div>
                 <hr>
+                <app-alerta [alerta]="alerta"></app-alerta>
                 @for (item of negocios; track $index) {
                 <div class="container">
                     <div class="row">

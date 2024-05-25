@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { MapaService } from '../../servicios/mapa.service';
 import { ItemMarcadorNegocioDTO } from '../../dto/item-marcador-negocio-dto';
@@ -13,18 +13,16 @@ import { NegociosService } from '../../servicios/negocios.service';
   styleUrl: './inicio.component.css'
 })
 export class InicioComponent {
-  negocios: ItemMarcadorNegocioDTO[];
-  constructor(private mapaService: MapaService, private negociosService: NegociosService){
-    this.negocios=[];
-    this.listar();
-  }
-
-  public listar(){
-    this.negocios= this.negociosService.listarMarcadores();
+  constructor(private mapaService: MapaService, private negociosService: NegociosService, private router: Router){
   }
 
   ngOnInit():void{
     this.mapaService.crearMapa();
-    this.mapaService.pintarMarcadores(this.negocios);
+  }
+
+  public iraBusqueda(valor: string){
+    if(valor){
+      this.router.navigate(["/busqueda",valor]);
+    }
   }
 }
