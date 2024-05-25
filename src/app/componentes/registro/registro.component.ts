@@ -7,6 +7,7 @@ import { AlertaComponent } from '../alerta/alerta.component';
 import { Alerta } from '../../dto/alerta';
 import { AuthService } from '../../servicios/auth.service';
 import { Router } from '@angular/router';
+import { EnumService } from '../../servicios/enum.service';
 
 @Component({
   selector: 'app-registro',
@@ -24,7 +25,7 @@ export class RegistroComponent {
   archivos!: FileList;
   alerta!: Alerta;
 
-  constructor(private imagenService: ImagenService, private authService: AuthService, private router: Router) {
+  constructor(private imagenService: ImagenService, private authService: AuthService, private router: Router, private enumService: EnumService) {
     this.ciudades = [];
     this.cargarCiudades();
     this.registroClienteDTO = new RegistroClienteDTO();
@@ -52,7 +53,14 @@ export class RegistroComponent {
   }
 
   private cargarCiudades() {
-    this.ciudades = ["Bogotá", "Medellín", "Cali", "Barranquilla", "Cartagena"];
+    this.enumService.obtenerCiudades().subscribe({
+      next: (data) => {
+        this.ciudades=data.respuesta;
+      },
+      error: (error) =>{
+        this.alerta= new Alerta("Error al cargar las ciudades", "danger");
+      }
+    });
   }
 
   public onFileChange(event: any) {

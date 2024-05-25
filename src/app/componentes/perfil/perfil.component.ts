@@ -10,6 +10,7 @@ import { ImagenService } from '../../servicios/imagen.service';
 import { Alerta } from '../../dto/alerta';
 import { TokenService } from '../../servicios/token.service';
 import { AlertaComponent } from '../alerta/alerta.component';
+import { EnumService } from '../../servicios/enum.service';
 
 @Component({
   selector: 'app-perfil',
@@ -25,7 +26,7 @@ export class PerfilComponent {
   archivos!:FileList;
   alerta!: Alerta;
   codigoCliente!: string;
-  constructor(private route: ActivatedRoute,private clienteService: ClienteService, private imagenService: ImagenService, private router: Router, private tokenService: TokenService){
+  constructor(private route: ActivatedRoute,private clienteService: ClienteService, private imagenService: ImagenService, private router: Router, private tokenService: TokenService, private enumService: EnumService){
     this.ciudades=[];
     this.cargarCiudades();
     this.actualizarClienteDto= new ActualizarClienteDto();
@@ -72,7 +73,14 @@ export class PerfilComponent {
   }
 
   private cargarCiudades() {
-    this.ciudades = ["Bogotá", "Medellín", "Cali", "Barranquilla", "Cartagena"];
+    this.enumService.obtenerCiudades().subscribe({
+      next: (data) => {
+        this.ciudades=data.respuesta;
+      },
+      error: (error) =>{
+        this.alerta= new Alerta("Error al cargar las ciudades", "danger");
+      }
+    });
   }
 
   public onFileChange(event: any) {

@@ -12,6 +12,7 @@ import { ImagenService } from '../../servicios/imagen.service';
 import { AlertaComponent } from '../alerta/alerta.component';
 import { Router } from '@angular/router';
 import { ImagenDTO } from '../../dto/imagen-dto';
+import { EnumService } from '../../servicios/enum.service';
 
 
 @Component({
@@ -31,7 +32,7 @@ export class CrearNegocioComponent {
   dias: string[];
   alerta!: Alerta;
 
-  constructor(private negocioService: NegociosService, private mapaService: MapaService, private tokenService: TokenService, private imagenService: ImagenService, private router: Router) {
+  constructor(private negocioService: NegociosService, private mapaService: MapaService, private tokenService: TokenService, private imagenService: ImagenService, private router: Router, private enumService: EnumService) {
     this.crearNegocioDTO = new CrearNegocioDTO();
     this.horarios = [new Horario()];
     this.telefonos = [""]
@@ -94,7 +95,14 @@ export class CrearNegocioComponent {
   }
 
   private cargarTiposNegocio() {
-    this.tiposNegocio = ["PANADERIA", "RESTAURANTE", "LIBRERIA", "GIMNASIO", "CAFETERIA", "BAR", "DISCOTECA", "PELUQUERIA", "SUPERMERCADO", "TIENDA", "OTRO"];
+    this.enumService.obtenerTiposDeNegocio().subscribe({
+      next: (data) => {
+        this.tiposNegocio=data.respuesta;
+      },
+      error: (error) => {
+        this.alerta= new Alerta("Error al cargar los tipos de negocio", "danger");
+      }
+    })
   }
 
   private cargarDias(){

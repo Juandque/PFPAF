@@ -12,6 +12,7 @@ import { Horario } from '../../models/horario';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ObtenerNegocioDTO } from '../../dto/obtener-negocio-dto';
 import { ImagenDTO } from '../../dto/imagen-dto';
+import { EnumService } from '../../servicios/enum.service';
 
 @Component({
   selector: 'app-actualizar-negocio-propio',
@@ -32,7 +33,7 @@ export class ActualizarNegocioPropioComponent {
   codigoNegocio: string='';
   alerta!: Alerta;
   
-  constructor(private negociosService: NegociosService, private mapaService: MapaService, private imagenService: ImagenService, private route: ActivatedRoute, private router:Router){
+  constructor(private negociosService: NegociosService, private mapaService: MapaService, private imagenService: ImagenService, private route: ActivatedRoute, private router:Router, private enumService: EnumService){
     this.actualizarNegocioDTO= new ActualizarNegocioDTO();
     this.obtenerNegocioDTO= new ObtenerNegocioDTO();
     this.route.params.subscribe((params) => {
@@ -51,7 +52,14 @@ export class ActualizarNegocioPropioComponent {
   }
 
   private cargarTiposNegocio() {
-    this.tiposNegocio = ["PANADERIA", "RESTAURANTE", "LIBRERIA", "GIMNASIO", "CAFETERIA", "BAR", "DISCOTECA", "PELUQUERIA", "SUPERMERCADO", "TIENDA", "OTRO"];
+    this.enumService.obtenerTiposDeNegocio().subscribe({
+      next: (data) => {
+        this.tiposNegocio=data.respuesta;
+      },
+      error: (error) => {
+        this.alerta= new Alerta("Error al cargar los tipos de negocio", "danger");
+      }
+    })
   }
 
   private cargarDias(){
